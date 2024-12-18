@@ -10063,6 +10063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
+  mat: {fileID: 2100000, guid: 58678dc8604a73e4fa13dd5048cd29b2, type: 2}
 --- !u!1 &240350687
 GameObject:
   m_ObjectHideFlags: 0
@@ -10223,6 +10224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  mat: {fileID: 2100000, guid: c9c3f9eaa4cadbe44a633e7408e67a75, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -25336,6 +25338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
+  mat: {fileID: 2100000, guid: 9356e5a6fdf53b844b29eb4efb1f1046, type: 2}
 --- !u!1001 &752754967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41117,6 +41120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
+  mat: {fileID: 2100000, guid: 86b5cddb1b4f61549a4537c1becba9c0, type: 2}
 --- !u!1 &1430402836
 GameObject:
   m_ObjectHideFlags: 0
@@ -41447,6 +41451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  mat: {fileID: 2100000, guid: b041950c231782b4ab40e17a3b5790eb, type: 2}
 --- !u!1 &1652760966
 GameObject:
   m_ObjectHideFlags: 0
@@ -47076,6 +47081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  mat: {fileID: 2100000, guid: 34f4f8e40edfc744a98624370f0b49fa, type: 2}
 --- !u!1 &2145360966
 GameObject:
   m_ObjectHideFlags: 0

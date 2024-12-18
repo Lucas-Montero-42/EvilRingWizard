@@ -17,10 +17,13 @@ public class SpellManager : MonoBehaviour
 
     private void Awake()
     {
-        //Player con Transparent FX
+        // Evita colision de Player con Transparent FX
         Physics.IgnoreLayerCollision(1,3, true);
-        //Transparent FX con Transparent FX
+
+        // Evita colision de Transparent FX con Transparent FX
         Physics.IgnoreLayerCollision(1,1, true);
+
+        // Resetea el cooldown de todos los hechizos
         foreach (SpellParams s in spells)
         {
             s.canShoot = true;
@@ -32,9 +35,9 @@ public class SpellManager : MonoBehaviour
         WeaponDiplay();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Cambia de hechizo con la rueda del ratón
         if (Input.GetAxisRaw("Mouse ScrollWheel") != 0f && CanChangeSpell)
         {
             ChangeSpell(Input.GetAxisRaw("Mouse ScrollWheel"));
@@ -42,8 +45,9 @@ public class SpellManager : MonoBehaviour
     }
     public void ChangeSpell(float input)
     {
-        //Play changing spell animation
+        //PLAY CHANGING SPELL ANIMATION (FALTA)------------------------------------------------------------
 
+        // Pasa al siguiente en función de la rueda del ratón
         if (input > 0)
         {
             currentSpell--;
@@ -53,7 +57,7 @@ public class SpellManager : MonoBehaviour
             currentSpell++;
         }
 
-        //Current Spell Edgecases
+        // Permite dar la vuelta a la lista (Current Spell Edgecases)
         if (currentSpell < 0)
         {
             currentSpell = spells.Count - 1;
@@ -63,10 +67,12 @@ public class SpellManager : MonoBehaviour
             currentSpell = 0;
         }
 
+        // Muestra el hechizo que esás usando y los inmediatamente anterior y posterior
         WeaponDiplay();
     }
     public void WeaponDiplay()
     {
+        // Si no hay hechizos no muestres nada
         if (spells.Count == 0)
         {
             currentText.text = "";
@@ -77,7 +83,7 @@ public class SpellManager : MonoBehaviour
 
         currentText.text = spells[currentSpell].name;
 
-        //Previous Spell Edgecase
+        // Previous Spell Edgecase
         if (currentSpell - 1 < 0)
         {
             previousText.text = spells[spells.Count - 1].name;
@@ -86,7 +92,7 @@ public class SpellManager : MonoBehaviour
         {
             previousText.text = spells[currentSpell - 1].name;
         }
-        //Next Spell Edgecase
+        // Next Spell Edgecase
         if (currentSpell + 1 > spells.Count - 1)
         {
             nextText.text = spells[0].name;

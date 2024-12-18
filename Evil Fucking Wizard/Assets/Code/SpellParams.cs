@@ -9,8 +9,8 @@ public class SpellParams : ScriptableObject
     public int damage;
     public bool canShoot;
     public GameObject particleEffect;
-    //Modelo del anillo
-    //Animaciónes de las manos (hold and shoot)
-    //Efectos
+    //MODELO DEL ANILLO------------------------------------------
+    //ANIMACIONES DE LAS MANOS (HOLD AND SHOOT)------------------
+    //EFECTOS MIENTRAS HOLDEAS-----------------------------------
 
 }

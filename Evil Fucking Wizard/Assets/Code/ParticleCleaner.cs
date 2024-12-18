@@ -5,9 +5,9 @@ using UnityEngine;
 public class ParticleCleaner : MonoBehaviour
 {
     public float DeathTime;
-    // Start is called before the first frame update
     void Start()
     {
+        // Temporizador para eliminar partículas
         StartCoroutine(Clean());
     }
     IEnumerator Clean()

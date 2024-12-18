@@ -28,11 +28,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Animate()
     {
+        // Animación de subir y bajar la camara al andar
         camAnimator.SetBool("Walking", walking);
     }
 
     private void GetInput()
     {
+        // WASD para moverse
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             walking = true;
@@ -40,14 +42,18 @@ public class PlayerMovement : MonoBehaviour
             inputVector.Normalize();
             inputVector = transform.TransformDirection(inputVector);
         }
+        // Si no se mueve...
         else
         {
+            // No hay animación
             walking = false;
+            // Frena con inercia
             inputVector = Vector3.Lerp(inputVector, Vector3.zero, momentumDamping * Time.deltaTime);
         }
     }
     private void MovePlayer()
     {
+        // Mueve al jugador según el input y la velocidad
         movementVector = (inputVector * playerSpeed)+(Vector3.up * gravity);
         characterController.Move(movementVector * Time.deltaTime);
     }
