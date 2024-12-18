@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83990ccb6cdbeb841949a49c17b5cc75, type: 3}
+  m_Name: PoisonSphere
+  m_EditorClassIdentifier: 
+  fireRate: 4
+  damage: 5
+  canShoot: 1
+  particleEffect: {fileID: 7813045111024191075, guid: 73a60707b603864439e4be9036c175ef,
+    type: 3}
+  force: 10
+  angle: 30
+  projectile: {fileID: 6497871516616614201, guid: 2e1643961e6dfda4a9996bba4cc8eee5,
+    type: 3}
