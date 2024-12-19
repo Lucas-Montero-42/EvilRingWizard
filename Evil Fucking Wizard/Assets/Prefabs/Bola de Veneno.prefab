@@ -9809,4 +9809,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleEffect: {fileID: 0}
-  OnFloor: 1
+  onFloor: 1
+  damage: 0
