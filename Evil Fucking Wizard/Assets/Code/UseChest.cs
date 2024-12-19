@@ -6,7 +6,7 @@ public class UseChest : MonoBehaviour
 {
     public GameObject interactText;
     [SerializeField] bool interactEnabled = false;
-    public bool open = false;
+    private bool open = false;
     public Animator animator;
     public AudioSource OpenSource;
     public AudioSource CloseSource;
