@@ -27,5 +27,5 @@ public class HP : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         Destroy(gameObject);
     }
-    //TAG DE VENENO
+    //TAG DE VENENO PARA DAMAGE OVER TIME
 }

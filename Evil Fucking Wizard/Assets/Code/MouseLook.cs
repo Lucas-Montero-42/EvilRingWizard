@@ -5,12 +5,22 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    // AÑADIR OPCIONES EN EL MENÚ PARA CAMBIARLO--------------------------------------
-    public float sensitivity = 1.5f;
+    public float sensitivity;
     public float smoothing = 10f;
     float xMousePos = 0;
     float smoothedMousePos = 0;
     float currentLookingPos;
+
+    private void Awake()
+    {
+        StartCoroutine(GetMouseSensitivity());
+    }
+
+    IEnumerator GetMouseSensitivity()
+    {
+        yield return new WaitForEndOfFrame();
+        sensitivity = GameManager.instance.mouseSensitivity;
+    }
 
     private void Start()
     {

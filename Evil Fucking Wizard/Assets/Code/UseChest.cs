@@ -25,13 +25,13 @@ public class UseChest : MonoBehaviour
     {
         if (interactEnabled && Input.GetKey(KeyCode.E) )
         {
-            //ABRIR EL MENÚ DEL COFRE
+            //ABRIR EL MENÚ DEL COFRE-------------------------------------------------------------------------
             GameManager.instance.Pause();
             interactText.SetActive(false);
         }
         if (Input.GetKey(KeyCode.Tab) && open)// && GameManager.instance.state == GameManager.GameStates.Chest)
         {
-            //CERRAR EL MENÚ DEL COFRE
+            //CERRAR EL MENÚ DEL COFRE------------------------------------------------------------------------
             GameManager.instance.Resume();
             ChestAction(false);
         }

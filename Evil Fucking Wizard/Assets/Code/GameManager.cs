@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     }
     public GameStates state;
     public GameObject player;
+    public GameObject PauseMenuScreen;
+    public float mouseSensitivity = 0.75f;
+    // AÑADIR OPCIONES EN EL MENÚ PARA CAMBIARLO--------------------------------------
 
     private void Awake()
     {
@@ -45,8 +48,7 @@ public class GameManager : MonoBehaviour
     }
     public void Pause()
     {
-        //AÑADIR MENU DE PAUSA
-        //PauseMenuScreen.SetActive(true);
+        PauseMenuScreen.SetActive(true);
         MouseLock(false);
         PlayerLock(true);
         Time.timeScale = 0;
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
     }
     public void Resume()
     {
-        //PauseMenuScreen.SetActive(false);
+        PauseMenuScreen.SetActive(false);
         MouseLock(true);
         PlayerLock(false);
         Time.timeScale = 1;
