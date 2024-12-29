@@ -16,11 +16,12 @@ public class InventoryGridSystem : MonoBehaviour
     public int width = 5;
     public int height = 2;
     public float cellSize = 100f;
-    public Vector3 gridPosition = new Vector3(0,0,0);
-    public Vector2Int disabledPosition = new Vector2Int(4,1);
+    private Vector3 gridPosition;
+    //public Vector2Int disabledPosition = new Vector2Int(4,1);
+    public Vector2Int[] disabledPositions;
 
     [Header("Visual Elements")]
-    public bool Left = false;
+    //public bool Left = false;
     public Sprite backImage;
     public Color backColor;
     public Sprite cellImage;
@@ -38,15 +39,19 @@ public class InventoryGridSystem : MonoBehaviour
         float X = GetComponentInParent<RectTransform>().position.x - (width * gridCellSize / 2);
         float Y = GetComponentInParent<RectTransform>().position.y - (height * gridCellSize / 2);
 
-        if (Left)
-            gridPosition = new Vector3(X - 350, Y - 150, 0);
-        else
-            gridPosition = new Vector3(X + 350, Y - 150, 0);
+        //if (Left)
+            gridPosition = new Vector3(X, Y - 150, 0);
+        //else
+        //    gridPosition += new Vector3(X + 350, Y - 150, 0);
         
 
         hand = new Grid<Item>(gridWidth, gridHeight, gridCellSize, gridPosition, (Grid<Item> i, int x, int y) => new Item(0, i, x, y));
 
-        hand.GetGridObject(disabledPosition.x, disabledPosition.y).enabled = false; //Pulgar
+        foreach (Vector2Int dPos in disabledPositions)
+        {
+            hand.GetGridObject(dPos.x, dPos.y).enabled = false; //Pulgar
+        }
+        //hand.GetGridObject(disabledPosition.x, disabledPosition.y).enabled = false; //Pulgar
         VisualizeGrid();
 
         //ringItem = ringItemList[0];
