@@ -38,7 +38,7 @@ public class Grid<GridObject>
             }
         }
 
-        bool showDebug = true;
+        bool showDebug = false;
         if (showDebug)
         {
             debugTextArray = new TextMeshProUGUI[w, h];

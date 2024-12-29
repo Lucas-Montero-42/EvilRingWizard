@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static RingItem;
 
 public class PlacedItem : MonoBehaviour
 {
@@ -28,7 +29,14 @@ public class PlacedItem : MonoBehaviour
     {
         return ringItem.GetGridPositionList(origin, dir);
     }
-
+    public RingItem GetRingItem()
+    {
+        return ringItem;
+    }
+    internal Dir GetDir()
+    {
+        return dir;
+    }
     public void DestroySelf()
     {
         Destroy(gameObject);

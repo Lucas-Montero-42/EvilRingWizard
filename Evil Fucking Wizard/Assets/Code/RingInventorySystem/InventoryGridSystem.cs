@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class InventoryGridSystem : MonoBehaviour
 {
     [SerializeField] private List<RingItem> ringItemList;
-    private RingItem ringItem;
-    private Grid<Item> Hand;
-    private RingItem.Dir dir = RingItem.Dir.Down;
+    [SerializeField]private RingItem ringItem;
+    private Grid<Item> hand;
+    public RingItem.Dir dir = RingItem.Dir.Down;
 
     [Header("Grid Size")]
     public int width = 5;
@@ -44,29 +44,29 @@ public class InventoryGridSystem : MonoBehaviour
             gridPosition = new Vector3(X + 350, Y - 150, 0);
         
 
-        Hand = new Grid<Item>(gridWidth, gridHeight, gridCellSize, gridPosition, (Grid<Item> i, int x, int y) => new Item(0, i, x, y));
+        hand = new Grid<Item>(gridWidth, gridHeight, gridCellSize, gridPosition, (Grid<Item> i, int x, int y) => new Item(0, i, x, y));
 
-        Hand.GetGridObject(disabledPosition.x, disabledPosition.y).enabled = false; //Pulgar
+        hand.GetGridObject(disabledPosition.x, disabledPosition.y).enabled = false; //Pulgar
         VisualizeGrid();
 
-        ringItem = ringItemList[0];
+        //ringItem = ringItemList[0];
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && ringItem)
         {
-            Item item = Hand.GetGridObject(GetMousePosition());
+            Item item = hand.GetGridObject(GetMousePosition());
             if (item != null)
             {
-                Hand.GetXY(GetMousePosition(), out int x, out int y);
+                hand.GetXY(GetMousePosition(), out int x, out int y);
 
                 List<Vector2Int> gridPositionList = ringItem.GetGridPositionList(new Vector2Int(x, y), dir);
 
                 bool canBuild = true;
                 foreach(Vector2Int gridPosition in gridPositionList)
                 {
-                    if (Hand.GetGridObject(gridPosition.x, gridPosition.y) == null || !Hand.GetGridObject(gridPosition.x, gridPosition.y).CanBuild() )
+                    if (hand.GetGridObject(gridPosition.x, gridPosition.y) == null || !hand.GetGridObject(gridPosition.x, gridPosition.y).CanBuild() )
                     {
                         canBuild = false;
                         break;
@@ -76,45 +76,52 @@ public class InventoryGridSystem : MonoBehaviour
                 if (canBuild)
                 {
                     Vector2Int rotationOffset = ringItem.GetRotationOffset(dir);
-                    Vector3 ringItemWorldPosition = Hand.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * Hand.GetCellSize();
+                    Vector3 ringItemWorldPosition = hand.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * hand.GetCellSize();
 
                     PlacedItem placedItem = PlacedItem.Create(ringItemWorldPosition, new Vector2Int(x,y), dir, ringItem);
 
                     foreach (Vector2Int gridPosition in gridPositionList)
                     {
-                        Hand.GetGridObject(gridPosition.x, gridPosition.y).SetTransform(placedItem);
+                        hand.GetGridObject(gridPosition.x, gridPosition.y).SetTransform(placedItem);
                     }
                     item.SetTransform(placedItem);
+                    //Remove Current Item
+                    ringItem = null;
                 }
                 else
                 {
                     Debug.Log("Doesen't fit");
                 }
             }
-
+            
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !ringItem)
         {
-            Item item = Hand.GetGridObject(GetMousePosition());
+            Item item = hand.GetGridObject(GetMousePosition());
+
             if (item != null)
             {
                 PlacedItem placedItem = item.GetPlacedItem();
                 if (placedItem != null)
                 {
+                    //"Pick up" item
+                    ringItem = placedItem.GetRingItem();
+                    dir = placedItem.GetDir();
                     placedItem.DestroySelf();
 
                     List<Vector2Int> gridPositionList = placedItem.GetGridPositionList();
                     foreach (Vector2Int gridPosition in gridPositionList)
                     {
-                        Hand.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacefObject();
+                        hand.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacefObject();
                     }
                 }
             }
+            
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && ringItem)
         {
             dir = RingItem.GetNextDir(dir);
-            Debug.Log(dir);
+            //Debug.Log(dir);
         }
         //Eliminar, solo para debug
         if (Input.GetKeyDown(KeyCode.Alpha1)) { ringItem = ringItemList[0]; }
@@ -122,11 +129,19 @@ public class InventoryGridSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3)) { ringItem = ringItemList[2]; }
         //if (Input.GetKeyDown(KeyCode.Alpha4)) {        }
     }
-    private Vector2 GetMousePosition()
+    public Vector2 GetMousePosition()
     {
         return Input.mousePosition;
     }
 
+    public Grid<Item> GetHand()
+    {
+        return hand;
+    }
+    public RingItem GetCurrentItem()
+    {
+        return ringItem;
+    }
     private void VisualizeGrid()
     {
         //Crear la parte trasera
@@ -137,6 +152,7 @@ public class InventoryGridSystem : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 //crear cada casilla
+                if (!hand.GetGridObject(x,y).enabled) continue;
                 CreateUIImage(this.transform, cellImage, new Vector3(gridPosition.x+ gridOffset + (cellSize*x), gridPosition.y+ gridOffset + (cellSize * y), 0), new Vector2(cellSize, cellSize), cellColor);
             }
         }
