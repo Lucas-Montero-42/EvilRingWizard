@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public GameStates state;
     public GameObject player;
     public GameObject PauseMenuScreen;
+    public GameObject HandsMenuScreen;
+    public GameObject ChestMenuScreen;
     public float mouseSensitivity = 0.75f;
     // AÑADIR OPCIONES EN EL MENÚ PARA CAMBIARLO--------------------------------------
 
@@ -39,16 +41,17 @@ public class GameManager : MonoBehaviour
             if (state == GameStates.Pause)
             {
                 Resume();
+                PauseMenuScreen.SetActive(false);
             }
             else if (state == GameStates.Play)
             {
                 Pause();
+                PauseMenuScreen.SetActive(true);
             }
         }
     }
     public void Pause()
     {
-        PauseMenuScreen.SetActive(true);
         MouseLock(false);
         PlayerLock(true);
         Time.timeScale = 0;
@@ -56,7 +59,6 @@ public class GameManager : MonoBehaviour
     }
     public void Resume()
     {
-        PauseMenuScreen.SetActive(false);
         MouseLock(true);
         PlayerLock(false);
         Time.timeScale = 1;

@@ -121,7 +121,7 @@ public class InventoryGridSystem : MonoBehaviour
                     Vector3 ringItemWorldPosition = hand.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * hand.GetCellSize();
 
                     PlacedItem placedItem = PlacedItem.Create(ringItemWorldPosition, new Vector2Int(x,y), dir, ringItem);
-
+                    placedItem.transform.SetParent(transform);
                     foreach (Vector2Int gridPosition in gridPositionList)
                     {
                         hand.GetGridObject(gridPosition.x, gridPosition.y).SetTransform(placedItem);

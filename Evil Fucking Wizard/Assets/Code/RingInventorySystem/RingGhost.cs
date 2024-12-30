@@ -22,6 +22,7 @@ public class RingGhost : MonoBehaviour
     {
         //Crea el objeto para que siga al cursor
         visual = Instantiate(defaultItem.itemVisual, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
+        visual.SetParent(this.transform);
         //Asigna al hijo que es el que tiene la información
         visualChild = GetChild(visual);
 
@@ -94,7 +95,6 @@ public class RingGhost : MonoBehaviour
         itemPickedFormChest = true;
         hands.setRingItem(chest.GetRingItem());
         hands.dir = chest.dir;
-        //Debug.Log("PICKED UP FROM CHEST AND CHEST DIR: "+chest.dir + " AND HAND DIR: "+hands.dir); // El debug dice que es de una manera pero luego es de otra
     }
     private void HandsItemDrop()
     {

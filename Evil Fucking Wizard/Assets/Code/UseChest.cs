@@ -26,12 +26,16 @@ public class UseChest : MonoBehaviour
         if (interactEnabled && Input.GetKey(KeyCode.E) )
         {
             //ABRIR EL MENÚ DEL COFRE-------------------------------------------------------------------------
+            GameManager.instance.HandsMenuScreen.SetActive(true);
+            GameManager.instance.ChestMenuScreen.SetActive(true);
             GameManager.instance.Pause();
             interactText.SetActive(false);
         }
         if (Input.GetKey(KeyCode.Tab) && open)// && GameManager.instance.state == GameManager.GameStates.Chest)
         {
             //CERRAR EL MENÚ DEL COFRE------------------------------------------------------------------------
+            GameManager.instance.ChestMenuScreen.SetActive(false);
+            GameManager.instance.HandsMenuScreen.SetActive(false);
             GameManager.instance.Resume();
             ChestAction(false);
         }
