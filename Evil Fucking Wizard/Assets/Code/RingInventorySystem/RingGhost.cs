@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static RingItem;
 
 public class RingGhost : MonoBehaviour
 {
@@ -15,16 +16,22 @@ public class RingGhost : MonoBehaviour
     public InventoryGridSystem chest;
     private Grid<Item> grid;
 
+    private bool itemPickedFormChest;
+
     void Start()
     {
         //Crea el objeto para que siga al cursor
         visual = Instantiate(defaultItem.itemVisual, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
         //Asigna al hijo que es el que tiene la información
         visualChild = GetChild(visual);
+
         hands.pickUpItem += ChestItemPickup;
-        chest.pickUpItem += HandsItemPickup;
         hands.dropItem += ChestItemDrop;
+        hands.rotateItem += ChestRotateItem;
+
+        chest.pickUpItem += HandsItemPickup;
         chest.dropItem += HandsItemDrop;
+        chest.rotateItem += HandsRotateItem;
     }
 
     // Update is called once per frame
@@ -61,21 +68,48 @@ public class RingGhost : MonoBehaviour
 
     }
     private void ChestItemPickup() 
-    { 
+    {
+        itemPickedFormChest = false;
         chest.setRingItem(hands.GetRingItem());
+        chest.dir = hands.dir;
     }
     private void ChestItemDrop()
     {
+        
         chest.setRingItem(null);
     }
+    private void ChestRotateItem()
+    {
+        if (!itemPickedFormChest)
+        {
+            hands.dir = RingItem.GetNextDir(hands.dir);
+            chest.dir = hands.dir;
+            //Debug.Log("Chest: "+chest.dir +" Hands: "+ hands.dir);
+        }
+    }
+
+
     private void HandsItemPickup()
     {
+        itemPickedFormChest = true;
         hands.setRingItem(chest.GetRingItem());
+        hands.dir = chest.dir;
+        //Debug.Log("PICKED UP FROM CHEST AND CHEST DIR: "+chest.dir + " AND HAND DIR: "+hands.dir); // El debug dice que es de una manera pero luego es de otra
     }
     private void HandsItemDrop()
     {
         hands.setRingItem(null);
     }
+    private void HandsRotateItem()
+    {
+        if (itemPickedFormChest)
+        {
+            chest.dir = RingItem.GetNextDir(chest.dir);
+            hands.dir = chest.dir;
+            //Debug.Log("Chest: " + chest.dir + " Hands: " + hands.dir);
+        }
+    }
+
     private void ItemHandler(InventoryGridSystem grid)
     {
         if (grid.GetCurrentItem())

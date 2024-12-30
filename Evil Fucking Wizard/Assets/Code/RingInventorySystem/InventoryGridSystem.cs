@@ -11,6 +11,7 @@ public class InventoryGridSystem : MonoBehaviour
 {
     public Action pickUpItem;
     public Action dropItem;
+    public Action rotateItem;
 
     [Header("Rings")]
     [SerializeField] private RingItem ringItem;
@@ -18,8 +19,6 @@ public class InventoryGridSystem : MonoBehaviour
     private Grid<Item> hand;
     public RingItem.Dir dir = RingItem.Dir.Down;
     [SerializeField] private List<RingItem> debugRingItemList;
-
-    public bool chest = false;
 
     [Header("Grid Size")]
     public int width = 5;
@@ -65,18 +64,24 @@ public class InventoryGridSystem : MonoBehaviour
         VisualizeGrid();
 
         //ringItem = ringItemList[0];
+        DebugSpawnRing();
+
+
+    }
+    private void DebugSpawnRing()
+    {
         if (innateRing)
         {
             int x = 1;
             int y = 0;
             Item item = hand.GetGridObject(x, y);
 
-            List <Vector2Int> gridPositionList = innateRing.GetGridPositionList(new Vector2Int(x, y), dir);
+            List<Vector2Int> gridPositionList = innateRing.GetGridPositionList(new Vector2Int(x, y), dir);
 
             Vector2Int rotationOffset = innateRing.GetRotationOffset(RingItem.Dir.Down);
             Vector3 ringItemWorldPosition = hand.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * hand.GetCellSize();
 
-            PlacedItem placedItem = PlacedItem.Create(ringItemWorldPosition, new Vector2Int(x, y), dir, innateRing);
+            PlacedItem placedItem = PlacedItem.Create(ringItemWorldPosition, new Vector2Int(x, y), RingItem.Dir.Down, innateRing);
 
             foreach (Vector2Int gridPosition in gridPositionList)
             {
@@ -86,15 +91,11 @@ public class InventoryGridSystem : MonoBehaviour
             //Remove Current Item
             ringItem = null;
         }
-    
     }
 
     void Update()
     {
-        if (chest)
-        {
-            //ringItem = ringItemList[GameObject.Find("Hands").GetComponent<InventoryGridSystem>().ringItem];
-        }
+
         if (Input.GetMouseButtonDown(0) && ringItem)
         {
             Item item = hand.GetGridObject(GetMousePosition());
@@ -165,14 +166,32 @@ public class InventoryGridSystem : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R) && ringItem)
         {
-            dir = RingItem.GetNextDir(dir);
-            //Debug.Log(dir);
+            //dir = RingItem.GetNextDir(dir);
+            rotateItem();
+            
         }
         //Eliminar, solo para debug
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { ringItem = debugRingItemList[0]; }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { ringItem = debugRingItemList[1]; }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { ringItem = debugRingItemList[2]; }
-        //if (Input.GetKeyDown(KeyCode.Alpha4)) {        }
+        /*
+         */
+        if (innateRing)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) 
+            { 
+                innateRing = debugRingItemList[0];
+                DebugSpawnRing();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) 
+            {
+                innateRing = debugRingItemList[1];
+                DebugSpawnRing();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) 
+            {
+                innateRing = debugRingItemList[2];
+                DebugSpawnRing();
+            }
+        }
+        
     }
     public Vector2 GetMousePosition()
     {
