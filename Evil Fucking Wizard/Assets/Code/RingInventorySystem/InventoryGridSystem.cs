@@ -1,22 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryGridSystem : MonoBehaviour
 {
-    [SerializeField] private List<RingItem> ringItemList;
-    [SerializeField]private RingItem ringItem;
+    public Action pickUpItem;
+    public Action dropItem;
+
+    [Header("Rings")]
+    [SerializeField] private RingItem ringItem;
+    [SerializeField] private RingItem innateRing;
     private Grid<Item> hand;
     public RingItem.Dir dir = RingItem.Dir.Down;
+    [SerializeField] private List<RingItem> debugRingItemList;
+
+    public bool chest = false;
 
     [Header("Grid Size")]
     public int width = 5;
     public int height = 2;
     public float cellSize = 100f;
     private Vector3 gridPosition;
+    public float yPosition;
     //public Vector2Int disabledPosition = new Vector2Int(4,1);
     public Vector2Int[] disabledPositions;
 
@@ -40,7 +50,7 @@ public class InventoryGridSystem : MonoBehaviour
         float Y = GetComponentInParent<RectTransform>().position.y - (height * gridCellSize / 2);
 
         //if (Left)
-            gridPosition = new Vector3(X, Y - 150, 0);
+            gridPosition = new Vector3(X, Y - 150 + yPosition, 0);
         //else
         //    gridPosition += new Vector3(X + 350, Y - 150, 0);
         
@@ -55,10 +65,36 @@ public class InventoryGridSystem : MonoBehaviour
         VisualizeGrid();
 
         //ringItem = ringItemList[0];
+        if (innateRing)
+        {
+            int x = 1;
+            int y = 0;
+            Item item = hand.GetGridObject(x, y);
+
+            List <Vector2Int> gridPositionList = innateRing.GetGridPositionList(new Vector2Int(x, y), dir);
+
+            Vector2Int rotationOffset = innateRing.GetRotationOffset(RingItem.Dir.Down);
+            Vector3 ringItemWorldPosition = hand.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * hand.GetCellSize();
+
+            PlacedItem placedItem = PlacedItem.Create(ringItemWorldPosition, new Vector2Int(x, y), dir, innateRing);
+
+            foreach (Vector2Int gridPosition in gridPositionList)
+            {
+                hand.GetGridObject(gridPosition.x, gridPosition.y).SetTransform(placedItem);
+            }
+            item.SetTransform(placedItem);
+            //Remove Current Item
+            ringItem = null;
+        }
+    
     }
 
     void Update()
     {
+        if (chest)
+        {
+            //ringItem = ringItemList[GameObject.Find("Hands").GetComponent<InventoryGridSystem>().ringItem];
+        }
         if (Input.GetMouseButtonDown(0) && ringItem)
         {
             Item item = hand.GetGridObject(GetMousePosition());
@@ -92,6 +128,7 @@ public class InventoryGridSystem : MonoBehaviour
                     item.SetTransform(placedItem);
                     //Remove Current Item
                     ringItem = null;
+                    dropItem();
                 }
                 else
                 {
@@ -111,6 +148,9 @@ public class InventoryGridSystem : MonoBehaviour
                 {
                     //"Pick up" item
                     ringItem = placedItem.GetRingItem();
+                    pickUpItem();
+
+
                     dir = placedItem.GetDir();
                     placedItem.DestroySelf();
 
@@ -129,9 +169,9 @@ public class InventoryGridSystem : MonoBehaviour
             //Debug.Log(dir);
         }
         //Eliminar, solo para debug
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { ringItem = ringItemList[0]; }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { ringItem = ringItemList[1]; }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { ringItem = ringItemList[2]; }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { ringItem = debugRingItemList[0]; }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) { ringItem = debugRingItemList[1]; }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) { ringItem = debugRingItemList[2]; }
         //if (Input.GetKeyDown(KeyCode.Alpha4)) {        }
     }
     public Vector2 GetMousePosition()
@@ -175,6 +215,16 @@ public class InventoryGridSystem : MonoBehaviour
         image.color = color;
         return image;
 
+    }
+
+    internal void setRingItem(RingItem rItem)
+    {
+        ringItem = rItem;
+    }
+
+    internal RingItem GetRingItem()
+    {
+        return ringItem;
     }
 }
 public class Item
