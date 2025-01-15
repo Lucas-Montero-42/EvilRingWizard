@@ -79,7 +79,10 @@ public class SpellShooter : MonoBehaviour
         if (Physics.Raycast(ray, out hit, currentSpell.range, collisionMask))
         {
             // Si tiene vida le hace daño
-            hit.collider.GetComponent<HP>().health -= currentSpell.damage;
+            if (hit.collider.GetComponent<HP>())
+            {
+                hit.collider.GetComponent<HP>().health -= currentSpell.damage;
+            }
 
             // Devuelve la posición del objeto lista para instanciar el efecto de particulas
             float floorPoint = (castPoint.position - hit.point).magnitude;

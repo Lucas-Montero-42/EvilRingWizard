@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Game
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 109
+  controlID: 110
   draggingID: 0
 --- !u!114 &3
 MonoBehaviour:
@@ -95,8 +95,8 @@ MonoBehaviour:
     y: 0
     width: 365
     height: 600
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 53
+  controlID: 63
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: GameView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -274,15 +274,15 @@ MonoBehaviour:
     height: 600
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 19}
   - {fileID: 20}
   - {fileID: 13}
   - {fileID: 12}
   - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2270,7 +2270,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -9554
+  m_LastSelectedObjectID: 28184
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2317,7 +2317,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/3DModels
+    - Assets/Code
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -2325,16 +2325,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/3DModels
+  - Assets/Code
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Lucas\Desktop\EvilFuckingWizard\Evil Fucking Wizard
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 50}
-    m_SelectedIDs: 34730000
-    m_LastClickedID: 29492
-    m_ExpandedIDs: 000000001073000012730000147300001673000000ca9a3b
+    m_SelectedIDs: 2e740000
+    m_LastClickedID: 29742
+    m_ExpandedIDs: 000000002c7400002e740000307400003274000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2362,7 +2362,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000010730000127300001473000016730000
+    m_ExpandedIDs: 000000002c7400002e7400003074000032740000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2389,7 +2389,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000aa6b000068700000727000008470000024b7000012b90000e4b10000000000005a9b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -2504,23 +2504,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d6d9ffff
-      m_LastClickedID: -9770
-      m_ExpandedIDs: b076ffffb476ffff0077ffff0477ffff0877ffffd6d9ffffaedaffffb0daffffb2daffffb4daffffb8daffffc2daffffc4daffffcadaffffccdaffffd2daffffd4daffffd8daffffdadaffffdcdaffffa6dbffffaadbffffb6dbffffbadbffffc6dbffffcadbffffd6dbffffdadbffffe6dbffffeadbffffeedbfffff2dbfffff6dbffff86e7ffffeefafffff2fafffff6fafffffafafffffefaffff02fbffff04fbffff22fbffffa46d0000086e0000
+      m_SelectedIDs: 186e0000
+      m_LastClickedID: 28184
+      m_ExpandedIDs: f001ffff38c4ffff22fbffff186e00007a6e0000bc6e0000f26e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: LHAND
-        m_OriginalName: LHAND
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -35060
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -2913,9 +2913,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.59588814, y: 1.0113047, z: 2.47996}
+    m_Target: {x: 885, y: 715, z: 0}
     speed: 2
-    m_Value: {x: 0.59588814, y: 1.0113047, z: 2.47996}
+    m_Value: {x: 885, y: 715, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2961,13 +2961,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.025805764, y: 0.012547821, z: -0.00055677857, w: 0.9996738}
+    m_Target: {x: 0.13019896, y: -0.42197517, z: 0.061100822, w: 0.89522076}
     speed: 2
-    m_Value: {x: 0.024304142, y: 0.012547567, z: -0.0005379037, w: 0.99962574}
+    m_Value: {x: 0.130188, y: -0.42193964, z: 0.06109568, w: 0.8951454}
   m_Size:
-    m_Target: 1.0532904
+    m_Target: 244.78552
     speed: 2
-    m_Value: 1.0079334
+    m_Value: 244.78552
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -3060,7 +3060,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1

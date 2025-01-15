@@ -26,11 +26,9 @@ public class InventoryGridSystem : MonoBehaviour
     public float cellSize = 100f;
     private Vector3 gridPosition;
     public float yPosition;
-    //public Vector2Int disabledPosition = new Vector2Int(4,1);
     public Vector2Int[] disabledPositions;
 
     [Header("Visual Elements")]
-    //public bool Left = false;
     public Sprite backImage;
     public Color backColor;
     public Sprite cellImage;
@@ -48,22 +46,19 @@ public class InventoryGridSystem : MonoBehaviour
         float X = GetComponentInParent<RectTransform>().position.x - (width * gridCellSize / 2);
         float Y = GetComponentInParent<RectTransform>().position.y - (height * gridCellSize / 2);
 
-        //if (Left)
-            gridPosition = new Vector3(X, Y - 150 + yPosition, 0);
-        //else
-        //    gridPosition += new Vector3(X + 350, Y - 150, 0);
+
+        gridPosition = new Vector3(X, Y - 150 + yPosition, 0);
+
         
 
         hand = new Grid<Item>(gridWidth, gridHeight, gridCellSize, gridPosition, (Grid<Item> i, int x, int y) => new Item(0, i, x, y));
 
         foreach (Vector2Int dPos in disabledPositions)
         {
-            hand.GetGridObject(dPos.x, dPos.y).enabled = false; //Pulgar
+            hand.GetGridObject(dPos.x, dPos.y).enabled = false; 
         }
-        //hand.GetGridObject(disabledPosition.x, disabledPosition.y).enabled = false; //Pulgar
         VisualizeGrid();
 
-        //ringItem = ringItemList[0];
         DebugSpawnRing();
 
 
@@ -82,13 +77,13 @@ public class InventoryGridSystem : MonoBehaviour
             Vector3 ringItemWorldPosition = hand.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * hand.GetCellSize();
 
             PlacedItem placedItem = PlacedItem.Create(ringItemWorldPosition, new Vector2Int(x, y), RingItem.Dir.Down, innateRing);
+            placedItem.transform.SetParent(transform);
 
             foreach (Vector2Int gridPosition in gridPositionList)
             {
                 hand.GetGridObject(gridPosition.x, gridPosition.y).SetTransform(placedItem);
             }
             item.SetTransform(placedItem);
-            //Remove Current Item
             ringItem = null;
         }
     }

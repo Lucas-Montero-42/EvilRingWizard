@@ -10,6 +10,8 @@ public class UseChest : MonoBehaviour
     public Animator animator;
     public AudioSource OpenSource;
     public AudioSource CloseSource;
+    public InventoryGridSystem ChestContent;
+    //public InventoryGridSystem ChestContent;
 
     public void Awake()
     {
