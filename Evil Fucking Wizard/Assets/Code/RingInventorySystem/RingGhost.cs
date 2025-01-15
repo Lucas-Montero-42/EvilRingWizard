@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static RingItem;
@@ -13,11 +14,24 @@ public class RingGhost : MonoBehaviour
     public RingItem defaultItem;
     private RingItem currentRingItem;
     public InventoryGridSystem hands;
+    public InventoryGridSystem[] chests;
     public InventoryGridSystem chest;
     private Grid<Item> grid;
+    public GameObject inventoryParent;
 
     private bool itemPickedFormChest;
 
+    private void Awake()
+    {
+        chests = inventoryParent.GetComponentsInChildren<InventoryGridSystem>(true);
+
+        foreach (InventoryGridSystem c in chests)
+        {
+            c.pickUpItem += HandsItemPickup;
+            c.dropItem += HandsItemDrop;
+            c.rotateItem += HandsRotateItem;
+        }
+    }
     void Start()
     {
         //Crea el objeto para que siga al cursor
@@ -30,42 +44,21 @@ public class RingGhost : MonoBehaviour
         hands.dropItem += ChestItemDrop;
         hands.rotateItem += ChestRotateItem;
 
-        chest.pickUpItem += HandsItemPickup;
-        chest.dropItem += HandsItemDrop;
-        chest.rotateItem += HandsRotateItem;
     }
 
     // Update is called once per frame
     void Update()
     {
+       foreach (InventoryGridSystem c in chests)
+       {
+            if (c.transform.parent.gameObject.activeSelf)
+            {
+                chest = c;
+            }
+       }
+
         ItemHandler(hands);
         ItemHandler(chest);
-        /*
-        if (hands.GetCurrentItem())
-        {
-            //Actualiza el current item
-            currentRingItem = hands.GetCurrentItem();
-            //Actualiza la posición del item en con el ratón
-            visual.position = hands.GetMousePosition() - new Vector2(50,50);
-            //Asigna la imagen, el tamaño y el offset del anillo en cuestión
-            visual.GetComponentInChildren<Image>().sprite = currentRingItem.itemVisual.GetComponentInChildren<Image>().sprite;
-            visualChild.sizeDelta = GetChild(currentRingItem.itemVisual).sizeDelta;
-            visualChild.localPosition = GetChild(currentRingItem.itemVisual).localPosition;
-            //DISPLAYEAR SI ESTÁN ROTADOS------------------------------------------------------------------------------------------
-            if (hands.dir == RingItem.Dir.Up)
-            {
-                visualChild.rotation = Quaternion.Euler(0,0,180);
-            }
-            else
-            {
-                visualChild.rotation = Quaternion.identity;
-            }
-        }
-        else
-        {
-            visualChild.GetComponent<Image>().sprite = GetChild(defaultItem.itemVisual).GetComponent<Image>().sprite;
-        }
-         */
 
     }
     private void ChestItemPickup() 

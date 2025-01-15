@@ -10,17 +10,23 @@ public class UseChest : MonoBehaviour
     public Animator animator;
     public AudioSource OpenSource;
     public AudioSource CloseSource;
-    public InventoryGridSystem ChestContent;
-    //public InventoryGridSystem ChestContent;
+    private GameObject ChestInventory;
+    public GameObject InventoryPrefab;
+    [SerializeField] private RingItem innateRing;
 
     public void Awake()
     {
         animator = GetComponent<Animator>();
+        
     }
     void Start()
     {
         //interactText = CanvasSingleton.instance.InteractText;
         interactText.SetActive(false);
+        InventoryPrefab.GetComponentInChildren<InventoryGridSystem>().innateRing = innateRing;
+        ChestInventory = Instantiate(InventoryPrefab);
+        ChestInventory.transform.SetParent(GameManager.instance.Canvas.transform);
+        ChestInventory.GetComponent<RectTransform>().localPosition = Vector3.zero;
     }
 
     void Update()
@@ -29,14 +35,14 @@ public class UseChest : MonoBehaviour
         {
             //ABRIR EL MENÚ DEL COFRE-------------------------------------------------------------------------
             GameManager.instance.HandsMenuScreen.SetActive(true);
-            GameManager.instance.ChestMenuScreen.SetActive(true);
+            ChestInventory.SetActive(true);
             GameManager.instance.Pause();
             interactText.SetActive(false);
         }
         if (Input.GetKey(KeyCode.Tab) && open)// && GameManager.instance.state == GameManager.GameStates.Chest)
         {
             //CERRAR EL MENÚ DEL COFRE------------------------------------------------------------------------
-            GameManager.instance.ChestMenuScreen.SetActive(false);
+            ChestInventory.SetActive(false);
             GameManager.instance.HandsMenuScreen.SetActive(false);
             GameManager.instance.Resume();
             ChestAction(false);

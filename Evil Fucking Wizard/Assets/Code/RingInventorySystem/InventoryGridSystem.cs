@@ -9,13 +9,13 @@ using static UnityEditor.Progress;
 
 public class InventoryGridSystem : MonoBehaviour
 {
-    public Action pickUpItem;
-    public Action dropItem;
-    public Action rotateItem;
+    public Action pickUpItem = delegate { };
+    public Action dropItem = delegate { };
+    public Action rotateItem = delegate { };
 
     [Header("Rings")]
     [SerializeField] private RingItem ringItem;
-    [SerializeField] private RingItem innateRing;
+    public RingItem innateRing;
     private Grid<Item> hand;
     public RingItem.Dir dir = RingItem.Dir.Down;
     [SerializeField] private List<RingItem> debugRingItemList;
@@ -124,7 +124,7 @@ public class InventoryGridSystem : MonoBehaviour
                     item.SetTransform(placedItem);
                     //Remove Current Item
                     ringItem = null;
-                    dropItem();
+                    dropItem?.Invoke();
                 }
                 else
                 {
@@ -144,7 +144,7 @@ public class InventoryGridSystem : MonoBehaviour
                 {
                     //"Pick up" item
                     ringItem = placedItem.GetRingItem();
-                    pickUpItem();
+                    pickUpItem?.Invoke();
 
 
                     dir = placedItem.GetDir();
@@ -161,8 +161,9 @@ public class InventoryGridSystem : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R) && ringItem)
         {
-            //dir = RingItem.GetNextDir(dir);
-            rotateItem();
+            //Solo para los valientes que quieran debugar el sistema de rotación. Ultima revisión 15/1/2025
+            //rotateItem?.Invoke();
+            //Debug.Log("ItemRotated on: "+name);
             
         }
         //Eliminar, solo para debug

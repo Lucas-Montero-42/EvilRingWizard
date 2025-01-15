@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_Name
-      value: Cofre 1
+      value: Cofre
       objectReference: {fileID: 0}
     - target: {fileID: 4083501151425157549, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
@@ -199,10 +199,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactText: {fileID: 0}
   interactEnabled: 0
-  open: 0
   animator: {fileID: 0}
   OpenSource: {fileID: 4342025595120575821}
   CloseSource: {fileID: 7455388512687914909}
+  InventoryPrefab: {fileID: 3000592445485612588, guid: 31ef47ef546fc05428ba425a9e104727,
+    type: 3}
 --- !u!82 &4342025595120575821
 AudioSource:
   m_ObjectHideFlags: 0
