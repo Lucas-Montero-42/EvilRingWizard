@@ -20,3 +20,4 @@ MonoBehaviour:
   ringPrefab3D: {fileID: 0}
   width: 2
   height: 1
+  spell: {fileID: 11400000, guid: af9ed76085eada54cb6ea32990dfd8b1, type: 2}

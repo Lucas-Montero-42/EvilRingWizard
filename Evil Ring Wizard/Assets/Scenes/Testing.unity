@@ -21823,6 +21823,7 @@ MonoBehaviour:
   currentText: {fileID: 1976580960}
   previousText: {fileID: 1326603449}
   nextText: {fileID: 1934767675}
+  handsInventory: {fileID: 556486532}
 --- !u!114 &875145678
 MonoBehaviour:
   m_ObjectHideFlags: 0

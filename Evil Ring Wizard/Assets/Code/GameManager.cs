@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (state == GameStates.Pause)
+            if (state == GameStates.Pause && !HoldingObject)
             {
                 Resume();
                 PauseMenuScreen.SetActive(false);

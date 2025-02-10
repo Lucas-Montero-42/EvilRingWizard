@@ -14,6 +14,10 @@ public class SpellManager : MonoBehaviour
     public TextMeshProUGUI currentText;
     public TextMeshProUGUI previousText;
     public TextMeshProUGUI nextText;
+    public InventoryGridSystem handsInventory;
+
+    // Compara con la ultima mano vista para saber que hechizos añadir
+    private Grid<Item> previousHand;
 
     private void Awake()
     {
@@ -28,6 +32,8 @@ public class SpellManager : MonoBehaviour
         {
             s.canShoot = true;
         }
+
+        handsInventory.dropItem += AddSpell;
 
     }
     private void Start()
@@ -100,6 +106,52 @@ public class SpellManager : MonoBehaviour
         else
         {
             nextText.text = spells[currentSpell + 1].name;
+        }
+    }
+    private void AddSpell()
+    {
+        Grid<Item> newHand = handsInventory.GetHand();
+        if (previousHand == null)
+        {
+            for (int x = 0; x < handsInventory.width; x++)
+            {
+                for (int y = 0; y < handsInventory.height; y++)
+                {
+                    if (newHand.GetGridObject(x, y).GetPlacedItem() != null)
+                    {
+                        spells.Add(newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
+                        WeaponDiplay();
+                        Debug.Log("Primera");
+                        previousHand = newHand;
+                        return;
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Segunda");
+            for (int x = 0; x < handsInventory.width; x++)
+            {
+                for (int y = 0; y < handsInventory.height; y++)
+                {
+                    if (newHand.GetGridObject(x, y).GetPlacedItem() != null)
+                    {
+                        Debug.Log(newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
+                        Debug.Log(previousHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
+                    }
+                    //Por algún motivo, la mano nueva y la vieja son iguales, es decir que la mano vieja se actualiza en alguna parte y yo no lo entiendo
+                    if (newHand.GetGridObject(x, y).GetPlacedItem() != null && newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell != previousHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell)
+                    {
+                        spells.Add(newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
+                        WeaponDiplay();
+                        Debug.Log("GOOD");
+                        previousHand = newHand;
+                        return;
+                    }
+                }
+            }
+            Debug.Log("Cagaste");
         }
     }
 }

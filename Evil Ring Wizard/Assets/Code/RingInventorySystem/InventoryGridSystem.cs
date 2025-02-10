@@ -125,6 +125,7 @@ public class InventoryGridSystem : MonoBehaviour
                     //Remove Current Item
                     ringItem = null;
                     dropItem?.Invoke();
+                    GameManager.instance.HoldingObject = false;
                 }
                 else
                 {
@@ -145,6 +146,7 @@ public class InventoryGridSystem : MonoBehaviour
                     //"Pick up" item
                     ringItem = placedItem.GetRingItem();
                     pickUpItem?.Invoke();
+                    GameManager.instance.HoldingObject = true;
 
 
                     dir = placedItem.GetDir();

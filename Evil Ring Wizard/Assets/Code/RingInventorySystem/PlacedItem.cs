@@ -21,7 +21,7 @@ public class PlacedItem : MonoBehaviour
         return item;
     }
 
-    private RingItem ringItem;
+    [SerializeField]private RingItem ringItem;
     private Vector2Int origin;
     private RingItem.Dir dir;
 

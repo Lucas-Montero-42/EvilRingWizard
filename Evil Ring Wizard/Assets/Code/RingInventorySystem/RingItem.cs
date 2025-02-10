@@ -33,6 +33,7 @@ public class RingItem : ScriptableObject
     public Transform ringPrefab3D;
     public int width;
     public int height;
+    public SpellParams spell;
     public int GetRotationAngle (Dir dir)
     {
         switch (dir)
