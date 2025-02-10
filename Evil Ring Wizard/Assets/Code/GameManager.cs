@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject PauseMenuScreen;
     public GameObject HandsMenuScreen;
     public GameObject Canvas;
-    public float mouseSensitivity = 0.75f;
-    // AÑADIR OPCIONES EN EL MENÚ PARA CAMBIARLO--------------------------------------
+    public float mouseSensitivity = 0.75f;// AÑADIR OPCIONES EN EL MENÚ PARA CAMBIARLO--------------------------------------
+    public bool HoldingObject = false;
 
     private void Awake()
     {

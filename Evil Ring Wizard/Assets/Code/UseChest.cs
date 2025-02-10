@@ -39,7 +39,7 @@ public class UseChest : MonoBehaviour
             GameManager.instance.Pause();
             interactText.SetActive(false);
         }
-        if (Input.GetKey(KeyCode.Tab) && open)// && GameManager.instance.state == GameManager.GameStates.Chest)
+        if (Input.GetKey(KeyCode.Tab) && open && !GameManager.instance.HoldingObject)// && GameManager.instance.state == GameManager.GameStates.Chest)
         {
             //CERRAR EL MENÚ DEL COFRE------------------------------------------------------------------------
             ChestInventory.SetActive(false);

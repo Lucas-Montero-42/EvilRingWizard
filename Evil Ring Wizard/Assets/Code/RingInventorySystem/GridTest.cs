@@ -26,6 +26,7 @@ public class GridTest : MonoBehaviour
             {
                 ring.IncreaseSize(1);
                 //grid.SetGridObject(GetMousePosition(),new Ring(1));
+                Debug.Log("HERE Mouse 1");
             }
 
             ring = grid2.GetGridObject(GetMousePosition());
@@ -33,6 +34,7 @@ public class GridTest : MonoBehaviour
             {
                 ring.IncreaseSize(1);
                 //grid2.SetGridObject(GetMousePosition(), new Ring(1));
+                Debug.Log("HERE2 Mouse 1");
             }
 
         }
@@ -42,12 +44,14 @@ public class GridTest : MonoBehaviour
             if (ring != null)
             {
                 Debug.Log(grid.GetGridObject(GetMousePosition()).size);
+                Debug.Log("HERE Mouse 0");
             }
 
             ring = grid2.GetGridObject(GetMousePosition());
             if (ring != null)
             {
                 Debug.Log(grid2.GetGridObject(GetMousePosition()).size);
+                Debug.Log("HERE2 Mouse 0");
             }
 
         }

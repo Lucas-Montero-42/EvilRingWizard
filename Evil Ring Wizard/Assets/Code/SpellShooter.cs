@@ -17,9 +17,12 @@ public class SpellShooter : MonoBehaviour
     void Update()
     {
         // Si hay hechizos en la lista y el cooldown lo permite, se dispara
-        if (spellManager.spells[spellManager.currentSpell].canShoot && spellManager.spells.Count != 0)
+        if (spellManager.spells.Count != 0)
         {
-            GetInput();
+            if (spellManager.spells[spellManager.currentSpell].canShoot)
+            {
+                GetInput();
+            }
         }
     }
 
