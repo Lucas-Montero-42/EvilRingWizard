@@ -81,7 +81,7 @@ public class Grid<GridObject>
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
             gridArray[x,y] = value;
-            debugTextArray[x,y].text = gridArray[x, y].ToString();
+            //debugTextArray[x,y].text = gridArray[x, y].ToString();
             if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
         }
     }

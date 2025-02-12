@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -15,12 +17,15 @@ public class SpellManager : MonoBehaviour
     public TextMeshProUGUI previousText;
     public TextMeshProUGUI nextText;
     public InventoryGridSystem handsInventory;
+    private List<SpellParams> previousSpells = new List<SpellParams>(); // Lista de hechizos anteriores
+    private SpellShooter spellShooter;
 
     // Compara con la ultima mano vista para saber que hechizos añadir
     private Grid<Item> previousHand;
 
     private void Awake()
     {
+        spellShooter = GetComponent<SpellShooter>();
         // Evita colision de Player con Transparent FX
         Physics.IgnoreLayerCollision(1,3, true);
 
@@ -34,6 +39,7 @@ public class SpellManager : MonoBehaviour
         }
 
         handsInventory.dropItem += AddSpell;
+        handsInventory.pickUpItem += RemoveSpell;
 
     }
     private void Start()
@@ -48,6 +54,7 @@ public class SpellManager : MonoBehaviour
         {
             ChangeSpell(Input.GetAxisRaw("Mouse ScrollWheel"));
         }
+        WeaponDiplay();
     }
     public void ChangeSpell(float input)
     {
@@ -74,7 +81,7 @@ public class SpellManager : MonoBehaviour
         }
 
         // Muestra el hechizo que esás usando y los inmediatamente anterior y posterior
-        WeaponDiplay();
+        //WeaponDiplay();
     }
     public void WeaponDiplay()
     {
@@ -88,70 +95,108 @@ public class SpellManager : MonoBehaviour
         }
 
         currentText.text = spells[currentSpell].name;
+        if (spells[currentSpell].canShoot)
+            currentText.color = Color.green;
+        else
+            currentText.color = Color.red;
+
 
         // Previous Spell Edgecase
         if (currentSpell - 1 < 0)
         {
             previousText.text = spells[spells.Count - 1].name;
+            if (spells[spells.Count - 1].canShoot)
+                previousText.color = Color.green;
+            else
+                previousText.color = Color.red;
         }
         else
         {
             previousText.text = spells[currentSpell - 1].name;
+            if (spells[currentSpell - 1].canShoot)
+                previousText.color = Color.green;
+            else
+                previousText.color = Color.red;
         }
         // Next Spell Edgecase
         if (currentSpell + 1 > spells.Count - 1)
         {
             nextText.text = spells[0].name;
+            if (spells[0].canShoot)
+                nextText.color = Color.green;
+            else
+                nextText.color = Color.red;
         }
         else
         {
             nextText.text = spells[currentSpell + 1].name;
+            if (spells[currentSpell + 1].canShoot)
+                nextText.color = Color.green;
+            else
+                nextText.color = Color.red;
         }
+        //Cambio de color según disponibilidad
+        
+        
+    }
+    public static T CloneScriptableObject<T>(T original) where T : ScriptableObject
+    {
+        T instance = Instantiate(original);
+        instance.name = original.name;
+        return instance;
     }
     private void AddSpell()
     {
-        Grid<Item> newHand = handsInventory.GetHand();
-        if (previousHand == null)
+        // Obtiene el anillo actualmente colocado en la mano
+        RingItem ring = GameManager.instance.lastRingItem;
+
+        // Verifica si hay un anillo y si tiene un hechizo asociado
+        if (ring != null && ring.spell != null)
         {
-            for (int x = 0; x < handsInventory.width; x++)
-            {
-                for (int y = 0; y < handsInventory.height; y++)
-                {
-                    if (newHand.GetGridObject(x, y).GetPlacedItem() != null)
-                    {
-                        spells.Add(newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
-                        WeaponDiplay();
-                        Debug.Log("Primera");
-                        previousHand = newHand;
-                        return;
-                    }
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("Segunda");
-            for (int x = 0; x < handsInventory.width; x++)
-            {
-                for (int y = 0; y < handsInventory.height; y++)
-                {
-                    if (newHand.GetGridObject(x, y).GetPlacedItem() != null)
-                    {
-                        Debug.Log(newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
-                        Debug.Log(previousHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
-                    }
-                    //Por algún motivo, la mano nueva y la vieja son iguales, es decir que la mano vieja se actualiza en alguna parte y yo no lo entiendo
-                    if (newHand.GetGridObject(x, y).GetPlacedItem() != null && newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell != previousHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell)
-                    {
-                        spells.Add(newHand.GetGridObject(x, y).GetPlacedItem().GetRingItem().spell);
-                        WeaponDiplay();
-                        Debug.Log("GOOD");
-                        previousHand = newHand;
-                        return;
-                    }
-                }
-            }
-            Debug.Log("Cagaste");
+            SpellParams clonedSpell = CloneScriptableObject(ring.spell);
+            spells.Add(clonedSpell);
+            WeaponDiplay(); // Actualiza la UI de hechizos
         }
     }
+
+    public void RemoveSpell()
+    {
+        SpellParams spellToRemove = handsInventory.GetCurrentItem().spell;
+
+        SpellParams foundSpell = spells.FirstOrDefault(s => s.name == spellToRemove.name);
+        if (foundSpell != null)
+        {
+            spells.Remove(foundSpell);
+            WeaponDiplay();
+        }
+    }
+    /*
+    private void RemoveSpell()
+    {
+        // Obtiene el anillo que estaba en la mano antes de ser retirado
+        RingItem ring = handsInventory.GetCurrentItem();
+
+        // Verifica si hay un anillo y si tiene un hechizo asociado
+        if (ring != null && ring.spell != null)
+        {
+            // Si el hechizo está en la lista, lo elimina
+            if (spells.Contains(ring.spell))
+            {
+                spells.Remove(ring.spell);
+
+                // Ajusta el índice de hechizos si el hechizo actual fue eliminado
+                if (spells.Count == 0)
+                {
+                    currentSpell = 0;
+                }
+                else if (currentSpell >= spells.Count)
+                {
+                    currentSpell = spells.Count - 1;
+                }
+
+                WeaponDiplay(); // Actualiza la UI de hechizos
+            }
+        }
+    }
+     */
 }

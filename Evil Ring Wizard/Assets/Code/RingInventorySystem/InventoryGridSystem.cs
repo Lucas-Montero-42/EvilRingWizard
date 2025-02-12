@@ -125,7 +125,7 @@ public class InventoryGridSystem : MonoBehaviour
                     //Remove Current Item
                     ringItem = null;
                     dropItem?.Invoke();
-                    GameManager.instance.HoldingObject = false;
+                    GameManager.instance.holdingObject = false;
                 }
                 else
                 {
@@ -146,8 +146,13 @@ public class InventoryGridSystem : MonoBehaviour
                     //"Pick up" item
                     ringItem = placedItem.GetRingItem();
                     pickUpItem?.Invoke();
-                    GameManager.instance.HoldingObject = true;
+                    GameManager.instance.holdingObject = true;
 
+                    // Si es un anillo, guardarlo en GameManager para efectos persistentes
+                    if (ringItem != null)
+                    {
+                        GameManager.instance.lastRingItem = ringItem;
+                    }
 
                     dir = placedItem.GetDir();
                     placedItem.DestroySelf();

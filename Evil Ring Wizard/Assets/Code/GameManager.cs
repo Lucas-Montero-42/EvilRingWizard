@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject HandsMenuScreen;
     public GameObject Canvas;
     public float mouseSensitivity = 0.75f;// AÑADIR OPCIONES EN EL MENÚ PARA CAMBIARLO--------------------------------------
-    public bool HoldingObject = false;
+    public bool holdingObject = false;
+    public RingItem lastRingItem;
 
     private void Awake()
     {
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (state == GameStates.Pause && !HoldingObject)
+            if (state == GameStates.Pause && !holdingObject)
             {
                 Resume();
                 PauseMenuScreen.SetActive(false);
