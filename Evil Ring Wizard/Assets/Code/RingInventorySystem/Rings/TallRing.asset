@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88497c926a0e234f9548297568bc533, type: 3}
-  m_Name: SquareRing
+  m_Name: TallRing
   m_EditorClassIdentifier: 
-  nameString: Testing 2x2
-  itemPrefab: {fileID: 8330419614215999061, guid: c25a55220a5ba6541b28eedd548c72f7,
+  nameString: Testing 1x2
+  itemPrefab: {fileID: 5925811343459130433, guid: 5bfbe6eb10609b94ba9175511f25dd28,
     type: 3}
-  itemVisual: {fileID: 8330419614215999061, guid: c25a55220a5ba6541b28eedd548c72f7,
+  itemVisual: {fileID: 5925811343459130433, guid: 5bfbe6eb10609b94ba9175511f25dd28,
     type: 3}
-  ringPrefab3D: {fileID: 7404920513450312793, guid: 76df3fa736e64be4b8084d87d1a447f9,
+  ringPrefab3D: {fileID: 5433380752930898504, guid: e54f13dc94bfd2342bd89fea6d93d695,
     type: 3}
-  width: 2
+  width: 1
   height: 2
-  spell: {fileID: 11400000, guid: c64efed5a26620547a6d21eb548d2286, type: 2}
+  spell: {fileID: 11400000, guid: 8ba8437685a47e44795440284912f208, type: 2}

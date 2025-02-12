@@ -30,7 +30,7 @@ public class RingItem : ScriptableObject
     public string nameString;
     public RectTransform itemPrefab;
     public RectTransform itemVisual;
-    public Transform ringPrefab3D;
+    public GameObject ringPrefab3D;
     public int width;
     public int height;
     public SpellParams spell;

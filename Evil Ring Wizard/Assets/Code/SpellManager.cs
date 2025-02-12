@@ -170,33 +170,4 @@ public class SpellManager : MonoBehaviour
             WeaponDiplay();
         }
     }
-    /*
-    private void RemoveSpell()
-    {
-        // Obtiene el anillo que estaba en la mano antes de ser retirado
-        RingItem ring = handsInventory.GetCurrentItem();
-
-        // Verifica si hay un anillo y si tiene un hechizo asociado
-        if (ring != null && ring.spell != null)
-        {
-            // Si el hechizo está en la lista, lo elimina
-            if (spells.Contains(ring.spell))
-            {
-                spells.Remove(ring.spell);
-
-                // Ajusta el índice de hechizos si el hechizo actual fue eliminado
-                if (spells.Count == 0)
-                {
-                    currentSpell = 0;
-                }
-                else if (currentSpell >= spells.Count)
-                {
-                    currentSpell = spells.Count - 1;
-                }
-
-                WeaponDiplay(); // Actualiza la UI de hechizos
-            }
-        }
-    }
-     */
 }

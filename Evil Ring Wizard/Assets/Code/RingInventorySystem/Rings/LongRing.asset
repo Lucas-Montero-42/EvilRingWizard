@@ -17,7 +17,8 @@ MonoBehaviour:
     type: 3}
   itemVisual: {fileID: 5925811343459130433, guid: 2b7cdce1064011c43b80b203a52e8e9c,
     type: 3}
-  ringPrefab3D: {fileID: 0}
+  ringPrefab3D: {fileID: 4162557067087608824, guid: 9bf1e1904698d2e438335a43e67b9917,
+    type: 3}
   width: 2
   height: 1
   spell: {fileID: 11400000, guid: af9ed76085eada54cb6ea32990dfd8b1, type: 2}
