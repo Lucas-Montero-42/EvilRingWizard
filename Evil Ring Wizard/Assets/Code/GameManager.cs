@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
             if (state == GameStates.Pause && !holdingObject)
             {
                 Resume();
-                PauseMenuScreen.SetActive(false);
             }
             else if (state == GameStates.Play)
             {
@@ -62,6 +61,7 @@ public class GameManager : MonoBehaviour
     {
         MouseLock(true);
         PlayerLock(false);
+        PauseMenuScreen.SetActive(false);
         Time.timeScale = 1;
         StartCoroutine(ChangeState(GameStates.Play));
     }
