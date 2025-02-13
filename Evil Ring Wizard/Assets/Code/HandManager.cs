@@ -6,7 +6,7 @@ public class HandManager : MonoBehaviour
 {
     public InventoryGridSystem handsInventory;
     public Transform[] HANDS;
-    public bool[,] ocupiedSpaces = new bool[14,2];
+    public bool[,] occupiedSpaces = new bool[14,2];
     private void Awake()
     {
         handsInventory.dropItem += AddRings;
@@ -15,7 +15,7 @@ public class HandManager : MonoBehaviour
         {
             for (int y = 0; y < 2; y++)
             {
-                ocupiedSpaces[x,y] = false;
+                occupiedSpaces[x,y] = false;
             }
         }
     }
@@ -28,39 +28,15 @@ public class HandManager : MonoBehaviour
         {
             for (int y = 0; y < handsInventory.height; y++)
             {
-                if (newHand.GetGridObject(x, y).GetPlacedItem() != null && !ocupiedSpaces[x,y])
+                if (newHand.GetGridObject(x, y).GetPlacedItem() != null && !occupiedSpaces[x,y])
                 {
                     GameObject newRingPrefab = Instantiate(handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem().GetRingItem().ringPrefab3D, HANDS[x + (y * 14)].transform);
 
                     int w = handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem().GetRingItem().width;
                     int h = handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem().GetRingItem().height;
 
-                    ocupiedSpaces[x, y] = true;
-                    for (int i = 0; i< w * h; i++)
-                    {
-                        if (w==1 || h==1)
-                        {
-                            if (w>h)
-                            {
-                                ocupiedSpaces[x+(w-1), y] = true;
-                            }
-                            else
-                            {
-                                ocupiedSpaces[x, y+(h-1)] = true;
-                            }
-                        }
-                        else
-                        {
-                            for (int z = 0; z < w; z++)
-                            {
-                                for (int a = 0; a < h; a++)
-                                {
-                                    ocupiedSpaces[x + z, y + a] = true;
-                                }
-                            }
-                        }
-                    }
-                    
+                    Ocupation(true, x, y, w, h);
+
                 }
             }
         }
@@ -73,39 +49,43 @@ public class HandManager : MonoBehaviour
         {
             for (int y = 0; y < handsInventory.height; y++)
             {
-                if (newHand.GetGridObject(x, y).GetPlacedItem() != null && !ocupiedSpaces[x, y])
+                if (newHand.GetGridObject(x, y).GetPlacedItem() != null && !occupiedSpaces[x, y])
                 {
                     GameObject newRingPrefab = Instantiate(handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem().GetRingItem().ringPrefab3D, HANDS[x + (y * 14)].transform);
 
                     int w = handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem().GetRingItem().width;
                     int h = handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem().GetRingItem().height;
 
-                    ocupiedSpaces[x, y] = true;
-                    for (int i = 0; i < w * h; i++)
-                    {
-                        if (w == 1 || h == 1)
-                        {
-                            if (w > h)
-                            {
-                                ocupiedSpaces[x + (w - 1), y] = true;
-                            }
-                            else
-                            {
-                                ocupiedSpaces[x, y + (h - 1)] = true;
-                            }
-                        }
-                        else
-                        {
-                            for (int z = 0; z < w; z++)
-                            {
-                                for (int a = 0; a < h; a++)
-                                {
-                                    ocupiedSpaces[x + z, y + a] = true;
-                                }
-                            }
-                        }
-                    }
+                    Ocupation(false,x,y,w,h);
 
+                }
+            }
+        }
+    }
+    private void Ocupation(bool occupied, int x, int y, int w, int h)
+    {
+        occupiedSpaces[x, y] = occupied;
+        for (int i = 0; i < w * h; i++)
+        {
+            if (w == 1 || h == 1)
+            {
+                if (w > h)
+                {
+                    occupiedSpaces[x + (w - 1), y] = occupied;
+                }
+                else
+                {
+                    occupiedSpaces[x, y + (h - 1)] = occupied;
+                }
+            }
+            else
+            {
+                for (int z = 0; z < w; z++)
+                {
+                    for (int a = 0; a < h; a++)
+                    {
+                        occupiedSpaces[x + z, y + a] = occupied;
+                    }
                 }
             }
         }
