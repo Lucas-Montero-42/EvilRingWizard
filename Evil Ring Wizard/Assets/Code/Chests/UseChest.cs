@@ -17,7 +17,6 @@ public class UseChest : MonoBehaviour
     public void Awake()
     {
         animator = GetComponent<Animator>();
-        
     }
     void Start()
     {
@@ -76,5 +75,9 @@ public class UseChest : MonoBehaviour
             OpenSource.Play();
         else 
             CloseSource.Play();
+    }
+    public void SetInnateRing(RingItem ring)
+    {
+        innateRing = ring;
     }
 }
