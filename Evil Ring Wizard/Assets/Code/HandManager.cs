@@ -43,6 +43,39 @@ public class HandManager : MonoBehaviour
     }
     private void RemoveRings()
     {
+        StartCoroutine(RemoveTimer());
+    }
+    IEnumerator RemoveTimer()
+    {
+        yield return new WaitForEndOfFrame();
+
+        for (int x = 0; x < handsInventory.width; x++)
+        {
+            for (int y = 0; y < handsInventory.height; y++)
+            {
+                // Si estaba ocupado antes pero ahora está vacío, eliminamos el anillo
+                if (occupiedSpaces[x, y] && handsInventory.GetHand().GetGridObject(x, y).GetPlacedItem() == null)
+                {
+                    Transform ringTransform = HANDS[x + (y * 14)].transform;
+
+                    // Eliminar el anillo si existe en el punto clave del dedo
+                    if (ringTransform.childCount > 0)
+                    {
+                        foreach (Transform child in ringTransform)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+
+                    // Marcar la posición como libre
+                    occupiedSpaces[x, y] = false;
+                }
+            }
+        }
+    }
+    /*
+    private void RemoveRings()
+    {
         Grid<Item> newHand = handsInventory.GetHand();
 
         for (int x = 0; x < handsInventory.width; x++)
@@ -62,6 +95,8 @@ public class HandManager : MonoBehaviour
             }
         }
     }
+
+     */
     private void Ocupation(bool occupied, int x, int y, int w, int h)
     {
         occupiedSpaces[x, y] = occupied;
