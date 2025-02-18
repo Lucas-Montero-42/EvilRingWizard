@@ -10547,12 +10547,13 @@ GameObject:
   - component: {fileID: 282456011}
   - component: {fileID: 282456013}
   - component: {fileID: 282456012}
+  - component: {fileID: 282456014}
   m_Layer: 0
   m_Name: EnemyKamikaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!23 &282456007
 MeshRenderer:
@@ -10693,6 +10694,33 @@ MonoBehaviour:
   attackRadius: 18
   roamRadius: 8.25
   roamDelay: 2
+--- !u!54 &282456014
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282456005}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &300348232
 GameObject:
   m_ObjectHideFlags: 0
@@ -21885,6 +21913,7 @@ GameObject:
   - component: {fileID: 875145677}
   - component: {fileID: 875145678}
   - component: {fileID: 875145679}
+  - component: {fileID: 875145680}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -22093,6 +22122,33 @@ MonoBehaviour:
   - {fileID: 707532359}
   - {fileID: 480103108}
   - {fileID: 1407925267}
+--- !u!54 &875145680
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875145668}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &905757361
 PrefabInstance:
   m_ObjectHideFlags: 0

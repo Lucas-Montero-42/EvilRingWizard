@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Enemy_Kamikaze : MonoBehaviour
 {
     private GameObject player;
+    private Renderer matRenderer;
     public enum States
     {
         Roam,
@@ -19,6 +20,7 @@ public class Enemy_Kamikaze : MonoBehaviour
 
     private void Awake()
     {
+        matRenderer = GetComponent<Renderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyState = States.Roam;
         Invoke("Roam", roamDelay);
@@ -31,7 +33,9 @@ public class Enemy_Kamikaze : MonoBehaviour
     {
         if ((player.transform.position - transform.position).magnitude < attackRadius)
         {
-            enemyState = States.Attack;
+            //Haz un sonido de advertencia y/o algo visual
+            matRenderer.material.color = Color.red;
+            StartCoroutine(DelayAttack());
         }
         if(enemyState == States.Attack)
         {
@@ -39,6 +43,14 @@ public class Enemy_Kamikaze : MonoBehaviour
         }
 
     }
+
+    IEnumerator DelayAttack()
+    {
+        navMeshAgent.destination = transform.position;
+        yield return new WaitForSeconds(1f);
+        enemyState = States.Attack;
+    }
+
     private void Roam()
     {
         //Setea una posición random para ir
@@ -51,7 +63,6 @@ public class Enemy_Kamikaze : MonoBehaviour
     }
     private void Attack()
     {
-        //Haz un sonido de advertencia y algo visual
         navMeshAgent.destination = player.transform.position;
         navMeshAgent.speed = 10f;
         navMeshAgent.acceleration = 50f;
@@ -65,5 +76,13 @@ public class Enemy_Kamikaze : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
         Gizmos.color = Color.green;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+            Debug.Log("Damage");
+        if (collision.gameObject == player)
+        {
+            Debug.Log("Damage");
+        }
     }
 }
