@@ -12,6 +12,7 @@ public class ChestRandomizer : MonoBehaviour
     public int ChestQuality = 0;
     public void Awake()
     {
+        chest = GetComponent<UseChest>();
         AssignRing();
     }
     private void AssignRing()
@@ -46,7 +47,6 @@ public class ChestRandomizer : MonoBehaviour
             else // 50% (10/20)
                 selectedRing = legendaryRings[Random.Range(0, legendaryRings.Length)];
         }
-
         chest.SetInnateRing(selectedRing);
     }
 }
