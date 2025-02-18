@@ -22,9 +22,10 @@ public class HP : MonoBehaviour
     }
     IEnumerator Death()
     {
+        gameObject.SetActive(false);
         //Desaparece con el tiempo
         // ALGUN MATERIAL DE DISOLVER DESPUES DE HACER UNA ANIMACIÓN -----------------------------
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
     //TAG DE VENENO PARA DAMAGE OVER TIME

@@ -5,12 +5,14 @@ using UnityEngine.AI;
 
 public class Enemy_Kamikaze : MonoBehaviour
 {
+    private HP hp;
     private GameObject player;
     private Renderer matRenderer;
     public enum States
     {
         Roam,
-        Attack
+        Attack,
+        Dead
     }
     public States enemyState;
     private NavMeshAgent navMeshAgent;
@@ -20,6 +22,7 @@ public class Enemy_Kamikaze : MonoBehaviour
 
     private void Awake()
     {
+        hp = GetComponent<HP>();
         matRenderer = GetComponent<Renderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyState = States.Roam;
@@ -53,13 +56,14 @@ public class Enemy_Kamikaze : MonoBehaviour
 
     private void Roam()
     {
+        if (enemyState != States.Roam)
+            return;
         //Setea una posición random para ir
         //navMeshAgent.nextPosition = Random.insideUnitCircle * roamRadius;
         Vector2 randomPosition = Random.insideUnitCircle * roamRadius;
         Vector3 offset = new Vector3(randomPosition.x, 0f, randomPosition.y);
         navMeshAgent.destination = transform.position + offset;
-        if (enemyState == States.Roam)
-            Invoke("Roam", roamDelay);
+        Invoke("Roam", roamDelay+ Random.Range(.1f,.5f));
     }
     private void Attack()
     {
@@ -69,20 +73,19 @@ public class Enemy_Kamikaze : MonoBehaviour
         //muevete hacia el player
         //Aumenta la velocidad hasta la velocidad máxima
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, roamRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
         Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, roamRadius);
     }
     private void OnCollisionEnter(Collision collision)
     {
-            Debug.Log("Damage");
         if (collision.gameObject == player)
         {
             Debug.Log("Damage");
+            hp.health = 0;
         }
     }
 }
