@@ -3,34 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy_Kamikaze : MonoBehaviour
+public class Enemy_Kamikaze : Enemy
 {
-    private HP hp;
-    private GameObject player;
-    private Renderer matRenderer;
     public enum States
     {
         Roam,
         Attack,
         Dead
     }
-    public States enemyState;
-    private NavMeshAgent navMeshAgent;
-    public float attackRadius;
-    public float roamRadius;
-    public float roamDelay;
+    [SerializeField] private States enemyState;
+    [SerializeField] private float attackRadius;
+    [SerializeField] private float roamRadius;
+    [SerializeField] private float roamDelay;
 
-    private void Awake()
+    override public void Awake()
     {
-        hp = GetComponent<HP>();
-        matRenderer = GetComponent<Renderer>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        base.Awake();
         enemyState = States.Roam;
         Invoke("Roam", roamDelay);
-    }
-    private void Start()
-    {
-        player = GameManager.instance.player;
     }
     void Update()
     {

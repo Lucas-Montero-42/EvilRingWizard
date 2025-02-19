@@ -14,16 +14,45 @@ public class PlayerMovement : MonoBehaviour
     public Animator camAnimator;
     public bool walking = false;
 
+    //MovementPrediction
+    [SerializeField]
+    [Range(0.1f, 5f)]
+    private float historicalPositionDuration = 1f;
+    [SerializeField]
+    [Range(0.001f, 1f)]
+    private float historicalPositionInterval = 0.1f;
+
+    private Queue<Vector3> historicalVelocities;
+    private float lastPositionTime;
+    private int maxQueueSize;
+
+    public Vector3 averageVelocity
+    {
+        get
+        {
+            Vector3 average = Vector3.zero;
+            foreach (Vector3 velocity in historicalVelocities)
+            {
+                average += velocity;
+            }
+            average.y = 0;
+            return average / historicalVelocities.Count;
+        }
+    }
+
     private void Awake()
     {
         camAnimator = GetComponentInChildren<Animator>();
         characterController = GetComponent<CharacterController>();
+        maxQueueSize = Mathf.CeilToInt(1f / historicalPositionInterval * historicalPositionDuration);
+        historicalVelocities = new Queue<Vector3>(maxQueueSize);
     }
     void Update()
     {
         GetInput();
         MovePlayer();
         Animate();
+        PredictMovement();
     }
 
     private void Animate()
@@ -56,6 +85,22 @@ public class PlayerMovement : MonoBehaviour
         // Mueve al jugador según el input y la velocidad
         movementVector = (inputVector * playerSpeed)+(Vector3.up * gravity);
         characterController.Move(movementVector * Time.deltaTime);
+    }
+    private void PredictMovement()
+    {
+        if (lastPositionTime +historicalPositionInterval<= Time.time)
+        {
+            if (historicalVelocities.Count == maxQueueSize)
+            {
+                historicalVelocities.Dequeue();
+            }
+            historicalVelocities.Enqueue(characterController.velocity);
+            lastPositionTime = Time.time;
+        }
+    }
+    public Vector3 GetMovement()
+    {
+        return averageVelocity;
     }
 
 }
