@@ -60,8 +60,6 @@ public class Enemy_Kamikaze : Enemy
         navMeshAgent.destination = player.transform.position;
         navMeshAgent.speed = 10f;
         navMeshAgent.acceleration = 50f;
-        //muevete hacia el player
-        //Aumenta la velocidad hasta la velocidad máxima
     }
     private void OnDrawGizmosSelected()
     {

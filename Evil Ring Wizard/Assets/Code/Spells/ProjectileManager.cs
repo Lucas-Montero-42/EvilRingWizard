@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileManager : MonoBehaviour
 {
-    [HideInInspector] public GameObject particleEffect;
+    public GameObject particleEffect;
     public bool onFloor;
     private HP enemyHP;
     [HideInInspector] public int damage;

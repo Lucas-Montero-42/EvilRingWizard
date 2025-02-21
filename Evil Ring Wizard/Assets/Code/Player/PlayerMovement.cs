@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private float lastPositionTime;
     private int maxQueueSize;
 
+    float T = 0;
+
     public Vector3 averageVelocity
     {
         get
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        T = historicalPositionDuration;
         camAnimator = GetComponentInChildren<Animator>();
         characterController = GetComponent<CharacterController>();
         maxQueueSize = Mathf.CeilToInt(1f / historicalPositionInterval * historicalPositionDuration);
@@ -100,6 +103,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public Vector3 GetMovement()
     {
+        if (T>0)
+        {
+            T -= Time.deltaTime;
+            return Vector3.zero;
+        }
         return averageVelocity;
     }
 
