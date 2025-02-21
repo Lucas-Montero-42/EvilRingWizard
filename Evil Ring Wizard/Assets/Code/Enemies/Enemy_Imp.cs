@@ -4,23 +4,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-
+[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyProjectileAttack))]
+[RequireComponent(typeof(EnemyMeleAttack))]
 public class Enemy_Imp : Enemy
 {
-    public struct ThrowData
-    {
-        public ThrowData(Vector3 a, float b, float c, float d)
-        {
-            initialVelocity = a;
-            angle = b;
-            deltaXZ = c;
-            deltaY = d;
-        }
-        public Vector3 initialVelocity;
-        public float angle;
-        public float deltaXZ;
-        public float deltaY;
-    }
+    
     public enum States
     {
         Distance,
@@ -30,25 +19,22 @@ public class Enemy_Imp : Enemy
     [SerializeField] private States enemyState;
     [SerializeField] private float distanceRadius;
     [SerializeField] private float fleeRadius;
-    [SerializeField] private float maxThrowForce;
-    public GameObject attackProjectile;
 
-    //Shooting
-    private float lastAttackTime;
-    [SerializeField] private float attackDelay;
-    [SerializeField] private float sphereRadius;
-    public LayerMask sightLayers;
-
+    EnemyProjectileAttack projectileAttack;
+    EnemyMeleAttack meleAttack;
 
 
     override public void Awake()
     {
         base.Awake();
+        movement = GetComponent<EnemyMovement>();
+        projectileAttack = GetComponent<EnemyProjectileAttack>();
+        meleAttack = GetComponent<EnemyMeleAttack>();
         enemyState = States.Distance;
     }
     void Update()
     {
-        FacePlayer();
+        //FacePlayer();
         if (enemyState != States.Dead)
         {
             if ((player.transform.position - transform.position).magnitude < distanceRadius)
@@ -56,10 +42,10 @@ public class Enemy_Imp : Enemy
             else
                 enemyState = States.Distance;
         }
-        if (enemyState == States.Close)
-            CloseCombat();
-        else
+        if (enemyState == States.Distance)
             DistanceCombat();
+        else
+            CloseCombat();
 
     }
 
@@ -73,91 +59,18 @@ public class Enemy_Imp : Enemy
         // Mientras tiene linea de tiro
         // Carga disparo
         // Dispara
-        if ((player.transform.position - transform.position).magnitude < fleeRadius)
-        {
-            Shoot();
-        }
+        //if ((player.transform.position - transform.position).magnitude < fleeRadius)
+        //{
+        //    projectileAttack.Shoot(player);
+        //}
             // Se mueve
         // Se muevete a otra posición
-    }
-
-    private void Shoot()
-    {
-        if (Time.time > lastAttackTime + attackDelay 
-            && Physics.SphereCast(transform.position, sphereRadius,
-            (player.transform.position+Vector3.up - transform.position).normalized,
-            out RaycastHit hit,
-            float.MaxValue,
-            sightLayers)
-            && hit.transform == player)
-        {
-            lastAttackTime = Time.time;
-            attackProjectile.transform.SetParent(transform, true);
-            attackProjectile.transform.SetParent(transform, true);
-            attackProjectile.GetComponent<Rigidbody>().useGravity = false;
-            attackProjectile.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            StartCoroutine(Attack());
-        }
-    }
-    public IEnumerator Attack()
-    {
-        //StopMoving
-        FacePlayer();
-        //attackProjectile.gameObject.SetActive(true);
-        //attackProjectile.transform.SetParent(null, true);
-        yield return null;
-
-        ThrowData throwData = CalculateThrowData(player.transform.position + player.GetComponent<PlayerMovement>().GetMovement(), transform.position);
-
-        DoThrow(throwData);
-        yield return null;
-        //MoveEnemy
-    }
-
-    private void DoThrow(ThrowData throwData)
-    {
-        attackProjectile.GetComponent<Rigidbody>().useGravity = true;
-        attackProjectile.GetComponent<Rigidbody>().isKinematic = false;
-        attackProjectile.GetComponent<Rigidbody>().velocity = throwData.initialVelocity;
-    }
-
-    private ThrowData CalculateThrowData(Vector3 TargetPosition, Vector3 StartPosition)
-    {
-        Vector3 displacement = new Vector3
-        (
-            TargetPosition.x,
-            StartPosition.y,
-            TargetPosition.z
-        ) - StartPosition;
-        float deltaY = TargetPosition.y - StartPosition.y;
-        float deltaXZ = displacement.magnitude;
-
-        float gravity = Mathf.Abs(Physics.gravity.y);
-        float throwStrength = Mathf.Clamp
-        (
-            Mathf.Sqrt
-            (
-                gravity
-                * (deltaY + Mathf.Sqrt(Mathf.Pow(deltaY,2)
-                + Mathf.Pow(deltaY,2)))
-            ),
-            0.01f,
-            maxThrowForce
-        );
-
-        float angle = Mathf.PI / 2f - (0.5f * (Mathf.PI / 2 - (deltaY / deltaXZ)));
-
-        Vector3 initialVelocity =
-            Mathf.Cos(angle) * throwStrength * displacement.normalized
-            + Mathf.Sin(angle) * throwStrength * Vector3.up;
-
-        return new ThrowData(initialVelocity,angle,deltaXZ,deltaY);
-
     }
 
     private void CloseCombat()
     {
         // Golpea
+        //meleAttack.Attack();
         // Se aleja hasta el radio externo
     }
     private void OnDrawGizmosSelected()

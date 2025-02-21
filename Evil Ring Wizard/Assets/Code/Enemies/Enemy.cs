@@ -9,12 +9,14 @@ public class Enemy : MonoBehaviour
     protected GameObject player;
     protected Renderer matRenderer;
     protected NavMeshAgent navMeshAgent;
+    [HideInInspector]public EnemyMovement movement;
 
     virtual public void Awake()
     {
         hp = GetComponent<HP>();
         matRenderer = GetComponent<Renderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        movement = GetComponent<EnemyMovement>();
     }
     virtual public void Start()
     {

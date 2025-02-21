@@ -61,6 +61,10 @@ public class EnemyMovement : MonoBehaviour
             //    break;
         }
     }
+    public void Iddle()
+    {
+        currentMovement = State.Iddle;
+    }
     public void Roam()
     {
         currentMovement = State.Roam;

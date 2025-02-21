@@ -870,6 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa567c47dcd59744884ac9786849e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement: {fileID: 0}
   enemyState: 0
   attackRadius: 18
   roamRadius: 8.25
@@ -2048,6 +2049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa567c47dcd59744884ac9786849e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement: {fileID: 0}
   enemyState: 0
   attackRadius: 18
   roamRadius: 8.25
@@ -3070,9 +3072,11 @@ GameObject:
   - component: {fileID: 1369447164}
   - component: {fileID: 1369447167}
   - component: {fileID: 1369447168}
-  - component: {fileID: 1369447169}
-  - component: {fileID: 1369447170}
   - component: {fileID: 1369447171}
+  - component: {fileID: 1369447175}
+  - component: {fileID: 1369447174}
+  - component: {fileID: 1369447173}
+  - component: {fileID: 1369447172}
   m_Layer: 0
   m_Name: EnemyImp
   m_TagString: Untagged
@@ -3181,46 +3185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
---- !u!114 &1369447169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1369447162}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c407046c986b449b7bcc043b73901c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyState: 0
-  distanceRadius: 2.5
-  fleeRadius: 10.72
-  maxThrowForce: 100
-  attackProjectile: {fileID: 6497871516616614201, guid: 2e1643961e6dfda4a9996bba4cc8eee5,
-    type: 3}
-  attackDelay: 1
-  sphereRadius: 10.72
-  sightLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &1369447170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1369447162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c4c5e055908794aa68c24d6728da3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMovement: 0
-  roamRadius: 5
-  roamDelay: 1
-  roamVariation: 0.5
-  movementPredictionTime: 1
 --- !u!195 &1369447171
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3243,6 +3207,70 @@ NavMeshAgent:
   m_BaseOffset: 0.50000006
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1369447172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369447162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc154eb86d669e44dac5c6ab141acf19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1369447173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369447162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c705c71c07e5194bbe874aed7e5ff80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxThrowForce: 10
+  attackProjectile: {fileID: 6497871516616614201, guid: 2e1643961e6dfda4a9996bba4cc8eee5,
+    type: 3}
+  sphereRadius: 10
+  sightLayers:
+    serializedVersion: 2
+    m_Bits: 9
+--- !u!114 &1369447174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369447162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c4c5e055908794aa68c24d6728da3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMovement: 0
+  roamRadius: 5
+  roamDelay: 1
+  roamVariation: 0.5
+  movementPredictionTime: 1
+--- !u!114 &1369447175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369447162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c407046c986b449b7bcc043b73901c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: 0}
+  enemyState: 0
+  distanceRadius: 3.2
+  fleeRadius: 13.64
 --- !u!1 &1421032760
 GameObject:
   m_ObjectHideFlags: 0
