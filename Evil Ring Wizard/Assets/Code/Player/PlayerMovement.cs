@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastPositionTime;
     private int maxQueueSize;
 
-    float T = 0;
+    private float T;
 
     public Vector3 averageVelocity
     {
@@ -56,6 +56,10 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         Animate();
         PredictMovement();
+        if (T > 0)
+        {
+            T -= Time.deltaTime;
+        }
     }
 
     private void Animate()
@@ -105,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (T>0)
         {
-            T -= Time.deltaTime;
             return Vector3.zero;
         }
         return averageVelocity;

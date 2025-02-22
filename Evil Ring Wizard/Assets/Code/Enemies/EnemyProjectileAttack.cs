@@ -5,10 +5,11 @@ using UnityEngine.AI;
 
 public class EnemyProjectileAttack : MonoBehaviour
 {
-    public float ShootForce = 25f;
     public GameObject shootPoint;
     public GameObject shootProjectile;
     private PlayerMovement playerMovement;
+    public float maxVerticalDisplacement = 0.5f;
+    private float g = Physics.gravity.y;
 
     private void Start()
     {
@@ -16,33 +17,25 @@ public class EnemyProjectileAttack : MonoBehaviour
     }
     private void Update()
     {
-        Aim();
     }
     public void Shoot()
     {
         
         GameObject projectile = Instantiate(shootProjectile);
         projectile.transform.position = shootPoint.transform.position;
-        projectile.GetComponent<Rigidbody>().AddForce(shootPoint.transform.forward * ShootForce, ForceMode.Impulse);
+        projectile.GetComponent<Rigidbody>().velocity = CalculateLaunchVelocity();
     }
-    private void Aim()
+    private Vector3 CalculateLaunchVelocity()
     {
-        //ARREGLAR
         Vector3 targetPosition = playerMovement.gameObject.transform.position + playerMovement.GetMovement() * 1f;
-        transform.LookAt(targetPosition);
-        float X;
-        float Y;
-        float g = -Physics.gravity.y;
-        X = targetPosition.z - transform.position.z;
-        Y = targetPosition.y - transform.position.y;
-        float angle = (float)Mathf.Atan((ShootForce+Mathf.Sqrt((ShootForce*ShootForce*ShootForce*ShootForce)-g*(g*(X*X)+2*Y*(ShootForce*ShootForce))))/(g*X));
-        targetPosition.y = (targetPosition - transform.position).magnitude * Mathf.Tan(angle);
-        shootPoint.transform.LookAt(targetPosition);
+        Debug.Log(playerMovement.GetMovement());
+        float h = targetPosition.y + maxVerticalDisplacement;
+        float displacementY = targetPosition.y - shootPoint.transform.position.y;
+        Vector3 displacementXZ = new Vector3(targetPosition.x - shootPoint.transform.position.x, 0, targetPosition.z - shootPoint.transform.position.z);
 
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * g * h);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * (h) / g) + Mathf.Sqrt(2 * (displacementY - h) / g));
+        return velocityXZ+velocityY;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(shootPoint.transform.position, shootPoint.transform.position+shootPoint.transform.forward);
-    }
+
 }
