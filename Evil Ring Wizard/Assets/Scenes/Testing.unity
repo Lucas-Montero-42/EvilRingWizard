@@ -4621,10 +4621,21 @@ PrefabInstance:
       propertyPath: chargeAttackTime
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3131852644639542560, guid: 4566d7a159804f5418c8f3b8c0bde970,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754322400610918903, guid: 4566d7a159804f5418c8f3b8c0bde970,
+        type: 3}
+      propertyPath: shootProjectile
+      value: 
+      objectReference: {fileID: 6497871516616614201, guid: 7ee4f36cfc6d3f34e87ee39b8f94e32a,
+        type: 3}
     - target: {fileID: 7492299234493932038, guid: 4566d7a159804f5418c8f3b8c0bde970,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.37
+      value: 13.56
       objectReference: {fileID: 0}
     - target: {fileID: 7492299234493932038, guid: 4566d7a159804f5418c8f3b8c0bde970,
         type: 3}
@@ -4634,7 +4645,7 @@ PrefabInstance:
     - target: {fileID: 7492299234493932038, guid: 4566d7a159804f5418c8f3b8c0bde970,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.15
+      value: -19.14
       objectReference: {fileID: 0}
     - target: {fileID: 7492299234493932038, guid: 4566d7a159804f5418c8f3b8c0bde970,
         type: 3}
@@ -4780,7 +4791,7 @@ PrefabInstance:
     - target: {fileID: 7859181379788353365, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.45
+      value: 20.56
       objectReference: {fileID: 0}
     - target: {fileID: 7859181379788353365, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}
@@ -4790,7 +4801,7 @@ PrefabInstance:
     - target: {fileID: 7859181379788353365, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18.77
+      value: -19.78
       objectReference: {fileID: 0}
     - target: {fileID: 7859181379788353365, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}

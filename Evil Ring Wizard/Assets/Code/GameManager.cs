@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Physics.IgnoreLayerCollision(6,7,true);
         if (instance == null)
         {
             instance = this;

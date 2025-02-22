@@ -66,7 +66,7 @@ public class EnemyMovement : MonoBehaviour
                 FleePlayer();
                 break;
             case State.OrbitPlayer:
-                OrbitPlayer();
+                OrbitPlayer(); // No loopeable
                 break;
         }
     }
@@ -102,7 +102,7 @@ public class EnemyMovement : MonoBehaviour
     }
     private void RoamMovement()
     {
-        if (currentMovement != State.Roam)
+        if (currentMovement != State.Roam || !gameObject.activeSelf)
             return;
         Vector2 randomPosition = UnityEngine.Random.insideUnitCircle * roamRadius;
         Vector3 offset = new Vector3(randomPosition.x, 0f, randomPosition.y);
@@ -111,21 +111,21 @@ public class EnemyMovement : MonoBehaviour
     }
     private void GoToPlayerMovement()
     {
-        if (currentMovement != State.GoToPlayer)
+        if (currentMovement != State.GoToPlayer || !gameObject.activeSelf)
             return;
         navMeshAgent.SetDestination(player.transform.position);
         Invoke("GoToPlayerMovement", 0.15f);
     }
     private void PredictPlayerMovement()
     {
-        if (currentMovement != State.PredictPlayer)
+        if (currentMovement != State.PredictPlayer || !gameObject.activeSelf)
             return;
         navMeshAgent.SetDestination(player.transform.position + playerMovement.GetMovement() * movementPredictionTime);
         Invoke("PredictPlayerMovement", 0.15f);
     }
     private void FleePlayerMovement()
     {
-        if (currentMovement != State.FleePlayer)
+        if (currentMovement != State.FleePlayer || !gameObject.activeSelf)
             return;
         float corneredDistance = 5;
         float escapeAngle = 10;
@@ -165,13 +165,12 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
-         
         Invoke("FleePlayerMovement", .5f);
     }
     
     private void OrbitPlayerMovement()
     {
-        if (currentMovement != State.OrbitPlayer)
+        if (currentMovement != State.OrbitPlayer || !gameObject.activeSelf)
             return;
         
         Vector2 playerPos;
@@ -184,16 +183,13 @@ public class EnemyMovement : MonoBehaviour
             enemyPos, travelDistance,
             out Option1, out Option2);
 
-        Debug.Log(Intersections);
         if (Intersections == 0)
         {
             navMeshAgent.SetDestination(player.transform.position);
-            //Invoke("OrbitPlayerMovement", maxtravelTime);
         }
         else if (Intersections == 1)
         {
             navMeshAgent.SetDestination(new Vector3(Option1.x,0,Option1.y));
-            //Invoke("OrbitPlayerMovement", maxtravelTime);
         }
         else
         {
@@ -203,7 +199,6 @@ public class EnemyMovement : MonoBehaviour
                 navMeshAgent.SetDestination(new Vector3(Option1.x, 0, Option1.y));
             else
                 navMeshAgent.SetDestination(new Vector3(Option2.x, 0, Option2.y));
-            //Invoke("OrbitPlayerMovement", maxtravelTime);
         }
         
         
@@ -275,10 +270,6 @@ public class EnemyMovement : MonoBehaviour
         if (!Application.isPlaying)
             return;
         // Debug solo en playmode
-    }
-    private void OnDrawGizmos()
-    {
-        
     }
 
 }

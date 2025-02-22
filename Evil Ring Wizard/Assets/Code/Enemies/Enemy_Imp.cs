@@ -62,7 +62,7 @@ public class Enemy_Imp : Enemy
 
             ChangeColor(Color.red);
             yield return new WaitForSeconds(chargeAttackTime);
-            //Dispara
+            projectileAttack.Shoot();
             ChangeColor(Color.white);
             yield return new WaitForSeconds(.25f);
             movement.OrbitPlayer(); // Sustituir por orbit
