@@ -22,4 +22,8 @@ public class Enemy : MonoBehaviour
     {
         player = GameManager.instance.player;
     }
+    protected void ChangeColor(Color color)
+    {
+        matRenderer.material.color = color;
+    }
 }

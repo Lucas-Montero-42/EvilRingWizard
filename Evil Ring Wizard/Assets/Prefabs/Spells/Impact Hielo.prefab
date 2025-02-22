@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 4893440798479235950}
   - component: {fileID: 4464088518988015712}
   m_Layer: 1
-  m_Name: Chispas de Hielo
+  m_Name: Impact Hielo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

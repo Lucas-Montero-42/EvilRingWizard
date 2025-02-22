@@ -19,6 +19,7 @@ public class Enemy_Imp : Enemy
     [SerializeField] private States enemyState;
     [SerializeField] private float distanceRadius;
     [SerializeField] private float fleeRadius;
+    [SerializeField] private float chargeAttackTime;
 
     EnemyProjectileAttack projectileAttack;
     EnemyMeleAttack meleAttack;
@@ -31,40 +32,48 @@ public class Enemy_Imp : Enemy
         projectileAttack = GetComponent<EnemyProjectileAttack>();
         meleAttack = GetComponent<EnemyMeleAttack>();
         enemyState = States.Distance;
+        DistanceCombat();
     }
     void Update()
     {
-        //FacePlayer();
         if (enemyState != States.Dead)
         {
-            if ((player.transform.position - transform.position).magnitude < distanceRadius)
-                enemyState = States.Close;
-            else
+            if ((player.transform.position - transform.position).magnitude > distanceRadius && enemyState != States.Distance)
+            {
                 enemyState = States.Distance;
+                DistanceCombat();
+            }
+            else if ((player.transform.position - transform.position).magnitude < distanceRadius && enemyState != States.Close)
+            {
+                enemyState = States.Close;
+                CloseCombat();
+            }
         }
-        if (enemyState == States.Distance)
-            DistanceCombat();
-        else
-            CloseCombat();
-
-    }
-
-    private void FacePlayer()
-    {
-        transform.LookAt(player.transform);
     }
 
     private void DistanceCombat()
     {
-        // Mientras tiene linea de tiro
-        // Carga disparo
-        // Dispara
-        //if ((player.transform.position - transform.position).magnitude < fleeRadius)
-        //{
-        //    projectileAttack.Shoot(player);
-        //}
-            // Se mueve
-        // Se muevete a otra posición
+        StartCoroutine(RangeCombat());
+    }
+    public IEnumerator RangeCombat()
+    {
+        if (true) //Linea de tiro
+        {
+
+            ChangeColor(Color.red);
+            yield return new WaitForSeconds(chargeAttackTime);
+            //Dispara
+            ChangeColor(Color.white);
+            yield return new WaitForSeconds(.25f);
+            movement.OrbitPlayer(); // Sustituir por orbit
+            yield return new WaitForSeconds(movement.maxtravelTime);
+            movement.Iddle();
+            StartCoroutine(RangeCombat());
+        }
+        else
+        {
+            //busca linea de tiro
+        }
     }
 
     private void CloseCombat()
