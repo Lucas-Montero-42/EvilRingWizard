@@ -4618,8 +4618,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1981663552927563202, guid: 4566d7a159804f5418c8f3b8c0bde970,
         type: 3}
+      propertyPath: fleeRadius
+      value: 14.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981663552927563202, guid: 4566d7a159804f5418c8f3b8c0bde970,
+        type: 3}
       propertyPath: chargeAttackTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981663552927563202, guid: 4566d7a159804f5418c8f3b8c0bde970,
+        type: 3}
+      propertyPath: closeDistanceRadius
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3131852644639542560, guid: 4566d7a159804f5418c8f3b8c0bde970,
         type: 3}

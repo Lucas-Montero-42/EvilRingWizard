@@ -17,7 +17,7 @@ public class Enemy_Imp : Enemy
         Dead
     }
     [SerializeField] private States enemyState;
-    [SerializeField] private float distanceRadius;
+    [SerializeField] private float closeDistanceRadius;
     [SerializeField] private float fleeRadius;
     [SerializeField] private float chargeAttackTime;
 
@@ -38,14 +38,15 @@ public class Enemy_Imp : Enemy
     {
         if (enemyState != States.Dead)
         {
-            if ((player.transform.position - transform.position).magnitude > distanceRadius && enemyState != States.Distance)
+            if ((player.transform.position - transform.position).magnitude > fleeRadius && enemyState != States.Distance)
             {
                 enemyState = States.Distance;
                 DistanceCombat();
             }
-            else if ((player.transform.position - transform.position).magnitude < distanceRadius && enemyState != States.Close)
+            else if ((player.transform.position - transform.position).magnitude < closeDistanceRadius && enemyState != States.Close)
             {
                 enemyState = States.Close;
+                StopAllCoroutines();
                 CloseCombat();
             }
         }
@@ -53,39 +54,37 @@ public class Enemy_Imp : Enemy
 
     private void DistanceCombat()
     {
-        StartCoroutine(RangeCombat());
+        StartCoroutine(Distance());
     }
-    public IEnumerator RangeCombat()
+    public IEnumerator Distance()
     {
-        if (true) //Linea de tiro
-        {
-
-            ChangeColor(Color.red);
-            yield return new WaitForSeconds(chargeAttackTime);
-            projectileAttack.Shoot();
-            ChangeColor(Color.white);
-            yield return new WaitForSeconds(.25f);
-            movement.OrbitPlayer(); // Sustituir por orbit
-            yield return new WaitForSeconds(movement.maxtravelTime);
-            movement.Iddle();
-            StartCoroutine(RangeCombat());
-        }
-        else
-        {
-            //busca linea de tiro
-        }
+        movement.Iddle();
+        ChangeColor(Color.red);
+        yield return new WaitForSeconds(chargeAttackTime);
+        projectileAttack.Shoot();
+        ChangeColor(Color.white);
+        yield return new WaitForSeconds(.25f);
+        movement.OrbitPlayer(); // Sustituir por orbit
+        yield return new WaitForSeconds(movement.maxtravelTime);
+        StartCoroutine(Distance());
     }
 
     private void CloseCombat()
     {
-        // Golpea
-        //meleAttack.Attack();
-        // Se aleja hasta el radio externo
+        StartCoroutine(Close());
+    }
+    public IEnumerator Close()
+    {
+        ChangeColor(Color.red);
+        meleAttack.Attack();
+        yield return new WaitForSeconds(.25f);
+        ChangeColor(Color.white);
+        movement.FleePlayer();
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, distanceRadius);
+        Gizmos.DrawWireSphere(transform.position, closeDistanceRadius);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, fleeRadius);
     }
