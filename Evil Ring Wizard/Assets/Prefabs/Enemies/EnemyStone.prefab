@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3459074134887205934}
   - component: {fileID: 5988156436104067234}
   - component: {fileID: 7603957180393295654}
+  - component: {fileID: 4857991852401724759}
+  - component: {fileID: 5225149550830509003}
   m_Layer: 0
   m_Name: EnemyStone
   m_TagString: Untagged
@@ -121,11 +123,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5cf3e036a907f4bbd0ac6cf4592eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stones:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  movement: {fileID: 0}
+  stoneAttack: {fileID: 1450593168863761369, guid: 167ee5fb5b28b1e4a875f7fca3248355,
+    type: 3}
   AOE: {fileID: 8348069707368115453, guid: eff460c768feef14d9ffa0e6e853bede, type: 3}
+  enemyState: 0
+  closeDistanceRadius: 0
+  fleeRadius: 0
+  chargeAttackTime: 0
 --- !u!114 &7603957180393295654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,3 +144,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
+--- !u!114 &4857991852401724759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735805375398766960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c4c5e055908794aa68c24d6728da3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMovement: 0
+  roamRadius: 5
+  roamDelay: 1
+  roamVariation: 0.5
+  movementPredictionTime: 1
+  travelDistance: 10
+  orbitDistance: 10
+  maxtravelTime: 5
+--- !u!195 &5225149550830509003
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735805375398766960}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

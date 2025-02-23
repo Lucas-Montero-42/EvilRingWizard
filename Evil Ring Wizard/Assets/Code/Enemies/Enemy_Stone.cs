@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(EnemyMeleAttack))]
 public class Enemy_Stone : Enemy
 {
     // Start is called before the first frame update
-    public GameObject[] Stones;
+    public GameObject stoneAttack;
     public GameObject AOE;
 
     public enum States
@@ -16,7 +16,6 @@ public class Enemy_Stone : Enemy
     }
     [SerializeField] private States enemyState;
     [SerializeField] private float closeDistanceRadius;
-    [SerializeField] private float fleeRadius;
     [SerializeField] private float chargeAttackTime;
 
     //EnemyProjectileAttack projectileAttack;
@@ -27,18 +26,19 @@ public class Enemy_Stone : Enemy
     {
         base.Awake();
         movement = GetComponent<EnemyMovement>();
-        //projectileAttack = GetComponent<EnemyProjectileAttack>();
         meleAttack = GetComponent<EnemyMeleAttack>();
         enemyState = States.Distance;
         DistanceCombat();
     }
+
     void Update()
     {
         if (enemyState != States.Dead)
         {
-            if ((player.transform.position - transform.position).magnitude > fleeRadius && enemyState != States.Distance)
+            if ((player.transform.position - transform.position).magnitude > closeDistanceRadius && enemyState != States.Distance)
             {
                 enemyState = States.Distance;
+                StopAllCoroutines();
                 DistanceCombat();
             }
             else if ((player.transform.position - transform.position).magnitude < closeDistanceRadius && enemyState != States.Close)
@@ -54,21 +54,21 @@ public class Enemy_Stone : Enemy
     {
         StartCoroutine(Distance());
     }
-    public IEnumerator Distance()
+    private IEnumerator Distance()
     {
-        // Crea una linea de rocas que spawnean y van subiendo y bajando
-        /*
+        yield return null;
         movement.Iddle();
         ChangeColor(Color.red);
         yield return new WaitForSeconds(chargeAttackTime);
-        projectileAttack.Shoot();
+        transform.LookAt(player.transform.position + player.GetComponent<PlayerMovement>().GetMovement()* 2f);
+        GameObject line = Instantiate(stoneAttack);
+        line.transform.position = new Vector3(transform.position.x,0,transform.position.z) + (transform.forward * 2f);
+        line.transform.rotation = transform.rotation;
         ChangeColor(Color.white);
-        yield return new WaitForSeconds(.25f);
-        movement.OrbitPlayer(); // Sustituir por orbit
-        yield return new WaitForSeconds(movement.maxtravelTime);
+        yield return new WaitForSeconds(2f);
+        movement.Roam();
+        yield return new WaitForSeconds(movement.roamDelay*4);
         StartCoroutine(Distance());
-         */
-        yield return null;
     }
 
     private void CloseCombat()
@@ -77,18 +77,17 @@ public class Enemy_Stone : Enemy
     }
     public IEnumerator Close()
     {
-        /*
         ChangeColor(Color.blue);
+        yield return new WaitForSeconds(1f);
         meleAttack.Attack();
-        yield return new WaitForSeconds(.25f);
         ChangeColor(Color.white);
-        movement.FleePlayer();
-        */
-        yield return null;
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(Close());
     }
     private void OnDrawGizmosSelected()
     {
-
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, closeDistanceRadius);
     }
 
 }

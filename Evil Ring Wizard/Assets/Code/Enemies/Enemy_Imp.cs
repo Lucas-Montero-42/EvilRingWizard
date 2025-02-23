@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-[RequireComponent(typeof(EnemyMovement))]
 [RequireComponent(typeof(EnemyProjectileAttack))]
 [RequireComponent(typeof(EnemyMeleAttack))]
 public class Enemy_Imp : Enemy
@@ -55,7 +53,7 @@ public class Enemy_Imp : Enemy
     {
         StartCoroutine(Distance());
     }
-    public IEnumerator Distance()
+    private IEnumerator Distance()
     {
         movement.Iddle();
         ChangeColor(Color.red);
