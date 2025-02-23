@@ -20,6 +20,11 @@ public class HP : MonoBehaviour
             StartCoroutine(Death());
         }
     }
+    public void Damage(int damage)
+    {
+        health -= damage;
+        Debug.Log("Damage");
+    }
     IEnumerator Death()
     {
         gameObject.SetActive(false);

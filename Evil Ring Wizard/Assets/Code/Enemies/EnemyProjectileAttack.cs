@@ -28,7 +28,7 @@ public class EnemyProjectileAttack : MonoBehaviour
     private Vector3 CalculateLaunchVelocity()
     {
         Vector3 targetPosition = playerMovement.gameObject.transform.position + playerMovement.GetMovement() * 1f;
-        Debug.Log(playerMovement.GetMovement());
+        //Debug.Log(playerMovement.GetMovement());
         float h = targetPosition.y + maxVerticalDisplacement;
         float displacementY = targetPosition.y - shootPoint.transform.position.y;
         Vector3 displacementXZ = new Vector3(targetPosition.x - shootPoint.transform.position.x, 0, targetPosition.z - shootPoint.transform.position.z);

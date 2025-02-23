@@ -39,6 +39,7 @@ public class EnemyMovement : MonoBehaviour
     Vector2 Option1 = new Vector2(0, 0);
     Vector2 Option2 = new Vector2(0, 0);
 
+    List<Vector3> debug = new List<Vector3>();
 
     private void Awake()
     {
@@ -142,13 +143,15 @@ public class EnemyMovement : MonoBehaviour
             right = 0;
         }       
         else
-        {            
+        {
             for (int i = 1; i < 360/(escapeAngle*2); i++)
             {
                 Vector3 rotatedFleeDirection = Quaternion.AngleAxis(escapeAngle*(i),Vector3.up) * fleeDirection;
                 targetPosition = transform.position + rotatedFleeDirection * corneredDistance;
+                targetPosition.y = 0;
+                //debug.Add(targetPosition);
                 navMeshAgent.CalculatePath(targetPosition, path);
-                if (path.status == NavMeshPathStatus.PathComplete && right != 2)
+                if (path.status != NavMeshPathStatus.PathInvalid && right != 2)
                 {
                     navMeshAgent.SetDestination(transform.position + rotatedFleeDirection * corneredDistance);
                     right = 1;
@@ -156,8 +159,10 @@ public class EnemyMovement : MonoBehaviour
                 }
                 rotatedFleeDirection = Quaternion.AngleAxis(-escapeAngle * (i), Vector3.up) * fleeDirection;
                 targetPosition = transform.position + rotatedFleeDirection * corneredDistance;
+                targetPosition.y = 0;
+                //debug.Add(targetPosition);
                 navMeshAgent.CalculatePath(targetPosition, path);
-                if (path.status == NavMeshPathStatus.PathComplete && right != 1)
+                if (path.status != NavMeshPathStatus.PathInvalid && right != 1)
                 {
                     navMeshAgent.SetDestination(transform.position + rotatedFleeDirection * corneredDistance);
                     right = 2;
@@ -271,5 +276,17 @@ public class EnemyMovement : MonoBehaviour
             return;
         // Debug solo en playmode
     }
+        /*
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        foreach (Vector3 v in debug)
+        {
+            Gizmos.DrawSphere(v,0.25f);
+        }
+        if (!Application.isPlaying)
+            return;
+    }
+         */
 
 }

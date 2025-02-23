@@ -49,7 +49,7 @@ public class Enemy_Kamikaze : Enemy
     {
         if (collision.gameObject == player)
         {
-            Debug.Log("Damage");
+            collision.gameObject.GetComponent<HP>().Damage(10);
             hp.health = 0;
         }
     }

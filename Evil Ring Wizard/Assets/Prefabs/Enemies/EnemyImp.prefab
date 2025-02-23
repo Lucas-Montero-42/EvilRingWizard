@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4599387377859938935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4562013380579905268}
+  m_Layer: 6
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4562013380579905268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599387377859938935}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5000002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7492299234493932038}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7817818821056435117
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3131852644639542560}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: Shooter
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -25,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 7817818821056435117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -70,6 +101,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3131852644639542560}
+  - {fileID: 4562013380579905268}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6579800586414260070
@@ -194,8 +226,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 0}
   enemyState: 0
-  distanceRadius: 3.2
-  fleeRadius: 13.64
+  closeDistanceRadius: 3
+  fleeRadius: 14
+  chargeAttackTime: 1
 --- !u!114 &769318705038469179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +246,9 @@ MonoBehaviour:
   roamDelay: 2
   roamVariation: 1
   movementPredictionTime: 1
+  travelDistance: 10
+  orbitDistance: 10
+  maxtravelTime: 3
 --- !u!114 &6754322400610918903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +262,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 7817818821056435117}
+  shootProjectile: {fileID: 6497871516616614201, guid: 7ee4f36cfc6d3f34e87ee39b8f94e32a,
+    type: 3}
+  maxVerticalDisplacement: 0.5
 --- !u!114 &1834137685285792228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,3 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc154eb86d669e44dac5c6ab141acf19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitbox: {fileID: 4599387377859938935}
+  attackRadius: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8

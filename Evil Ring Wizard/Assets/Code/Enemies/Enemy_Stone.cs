@@ -1,14 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-[RequireComponent(typeof(EnemyMovement))]
-[RequireComponent(typeof(EnemyProjectileAttack))]
-[RequireComponent(typeof(EnemyMeleAttack))]
-public class Enemy_Imp : Enemy
+
+public class Enemy_Stone : Enemy
 {
+    // Start is called before the first frame update
+    public GameObject[] Stones;
+    public GameObject AOE;
+
     public enum States
     {
         Distance,
@@ -20,7 +19,7 @@ public class Enemy_Imp : Enemy
     [SerializeField] private float fleeRadius;
     [SerializeField] private float chargeAttackTime;
 
-    EnemyProjectileAttack projectileAttack;
+    //EnemyProjectileAttack projectileAttack;
     EnemyMeleAttack meleAttack;
 
 
@@ -28,7 +27,7 @@ public class Enemy_Imp : Enemy
     {
         base.Awake();
         movement = GetComponent<EnemyMovement>();
-        projectileAttack = GetComponent<EnemyProjectileAttack>();
+        //projectileAttack = GetComponent<EnemyProjectileAttack>();
         meleAttack = GetComponent<EnemyMeleAttack>();
         enemyState = States.Distance;
         DistanceCombat();
@@ -57,6 +56,8 @@ public class Enemy_Imp : Enemy
     }
     public IEnumerator Distance()
     {
+        // Crea una linea de rocas que spawnean y van subiendo y bajando
+        /*
         movement.Iddle();
         ChangeColor(Color.red);
         yield return new WaitForSeconds(chargeAttackTime);
@@ -66,6 +67,8 @@ public class Enemy_Imp : Enemy
         movement.OrbitPlayer(); // Sustituir por orbit
         yield return new WaitForSeconds(movement.maxtravelTime);
         StartCoroutine(Distance());
+         */
+        yield return null;
     }
 
     private void CloseCombat()
@@ -74,18 +77,18 @@ public class Enemy_Imp : Enemy
     }
     public IEnumerator Close()
     {
+        /*
         ChangeColor(Color.blue);
         meleAttack.Attack();
         yield return new WaitForSeconds(.25f);
         ChangeColor(Color.white);
         movement.FleePlayer();
+        */
+        yield return null;
     }
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, closeDistanceRadius);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, fleeRadius);
+
     }
 
 }

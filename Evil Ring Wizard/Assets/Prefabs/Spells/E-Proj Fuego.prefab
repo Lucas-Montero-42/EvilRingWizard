@@ -9808,7 +9808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c0f2667a2becd4fa9995a61ab43769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleEffect: {fileID: 7813045111024191075, guid: 73a60707b603864439e4be9036c175ef,
+  particleEffect: {fileID: 7481613847330347997, guid: aefe6a519fc42bd44b5e88e95981d0ab,
     type: 3}
   onFloor: 1
   damage: 0
