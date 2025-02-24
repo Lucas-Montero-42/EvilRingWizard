@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4068891166220038096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3765561413962972961}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3765561413962972961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068891166220038096}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.19733962, z: 0.4144132}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6053250388324397442}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4735805375398766960
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,6 +47,7 @@ GameObject:
   - component: {fileID: 7603957180393295654}
   - component: {fileID: 4857991852401724759}
   - component: {fileID: 5225149550830509003}
+  - component: {fileID: 432235665271615864}
   m_Layer: 0
   m_Name: EnemyStone
   m_TagString: Untagged
@@ -35,7 +67,8 @@ Transform:
   m_LocalPosition: {x: 12.26, y: 2.89, z: -1.2399998}
   m_LocalScale: {x: 4.5530643, y: 6.3342576, z: 4.2228384}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3765561413962972961}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1910643521496440545
@@ -128,9 +161,8 @@ MonoBehaviour:
     type: 3}
   AOE: {fileID: 8348069707368115453, guid: eff460c768feef14d9ffa0e6e853bede, type: 3}
   enemyState: 0
-  closeDistanceRadius: 0
-  fleeRadius: 0
-  chargeAttackTime: 0
+  closeDistanceRadius: 6
+  chargeAttackTime: 2
 --- !u!114 &7603957180393295654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c4c5e055908794aa68c24d6728da3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMovement: 0
+  currentMovement: 1
   roamRadius: 5
   roamDelay: 1
   roamVariation: 0.5
@@ -186,3 +218,20 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &432235665271615864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735805375398766960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc154eb86d669e44dac5c6ab141acf19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitbox: {fileID: 4068891166220038096}
+  attackRadius: 3
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8

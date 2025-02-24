@@ -149,7 +149,7 @@ public class EnemyMovement : MonoBehaviour
                 Vector3 rotatedFleeDirection = Quaternion.AngleAxis(escapeAngle*(i),Vector3.up) * fleeDirection;
                 targetPosition = transform.position + rotatedFleeDirection * corneredDistance;
                 targetPosition.y = 0;
-                //debug.Add(targetPosition);
+                debug.Add(targetPosition);
                 navMeshAgent.CalculatePath(targetPosition, path);
                 if (path.status != NavMeshPathStatus.PathInvalid && right != 2)
                 {
@@ -160,7 +160,7 @@ public class EnemyMovement : MonoBehaviour
                 rotatedFleeDirection = Quaternion.AngleAxis(-escapeAngle * (i), Vector3.up) * fleeDirection;
                 targetPosition = transform.position + rotatedFleeDirection * corneredDistance;
                 targetPosition.y = 0;
-                //debug.Add(targetPosition);
+                debug.Add(targetPosition);
                 navMeshAgent.CalculatePath(targetPosition, path);
                 if (path.status != NavMeshPathStatus.PathInvalid && right != 1)
                 {
@@ -277,6 +277,7 @@ public class EnemyMovement : MonoBehaviour
         // Debug solo en playmode
     }
         /*
+         */
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -287,6 +288,5 @@ public class EnemyMovement : MonoBehaviour
         if (!Application.isPlaying)
             return;
     }
-         */
 
 }
