@@ -27,11 +27,11 @@ public class DungeonGenerator : MonoBehaviour
             ocupied = b;
         }
 
-
     }
+    public GameObject DebugCube;
     public Room[,] floorPlan = new Room[10, 8];
     [SerializeField]private List<GameObject> roomPrefabs;
-    [SerializeField]private Queue<Room> roomQueue;
+    [SerializeField]private Queue<Room> roomQueue = new Queue<Room>();
     int maxrooms = 15;
     int minrooms = 7;
     [SerializeField] int NumberOfRooms;
@@ -59,10 +59,24 @@ public class DungeonGenerator : MonoBehaviour
 
         for (int i  = 0; i < NumberOfRooms; i++)
         {
+            Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * 10, 0, roomQueue.Peek().y * 10), Quaternion.identity);
             CheckAllNeighbours(roomQueue.Dequeue());
             currentnumberOfRooms++;
         }
 
+    }
+    private void Start()
+    {
+        for (int x = 0; x < 9; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                if (floorPlan[x, y].ocupied)
+                {
+                    Instantiate(DebugCube,new Vector3(x * 10 ,0 , y * 10),Quaternion.identity);
+                }
+            }
+        }
     }
     public void CheckAllNeighbours(Room r)
     {
@@ -71,24 +85,28 @@ public class DungeonGenerator : MonoBehaviour
             GetNeighbour(r, Dir.UP).ocupied = true;
             roomQueue.Enqueue(GetNeighbour(r, Dir.UP));
             //Enqueue Room
+            r.roomType = RoomTypes.EMPTY; //DEBUG
         }
         if (CheckNeighbour(r, Dir.DOWN))
         {
             GetNeighbour(r, Dir.DOWN).ocupied = true;
             roomQueue.Enqueue(GetNeighbour(r, Dir.DOWN));
             //Enqueue Room
+            r.roomType = RoomTypes.EMPTY; //DEBUG
         }
         if (CheckNeighbour(r, Dir.LEFT))
         {
             GetNeighbour(r, Dir.LEFT).ocupied = true;
             roomQueue.Enqueue(GetNeighbour(r, Dir.LEFT));
             //Enqueue Room
+            r.roomType = RoomTypes.EMPTY; //DEBUG
         }
         if (CheckNeighbour(r, Dir.RIGHT))
         {
             GetNeighbour(r, Dir.RIGHT).ocupied = true;
             roomQueue.Enqueue(GetNeighbour(r, Dir.RIGHT));
             //Enqueue Room
+            r.roomType = RoomTypes.EMPTY; //DEBUG
         }
     }
     public bool CheckNeighbour(Room r, Dir d)

@@ -458,8 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576545008eab305459a37b7c8f9d564c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
-  treasureChest: {fileID: 6094342002955030524, guid: 2932318d352f7174fba3a9aa236b47cd,
+  DebugCube: {fileID: 5145142903298916283, guid: bf47b28b8812f5e4093d9a61aa287fa6,
     type: 3}
   roomPrefabs:
   - {fileID: 1853694130224325688, guid: 2121b873cb7c4f14eaaa5880bfedf76b, type: 3}
@@ -467,6 +466,8 @@ MonoBehaviour:
   - {fileID: 1853694130224325688, guid: 0cc74acbbb57d6245bcd8e3e43630358, type: 3}
   - {fileID: 1853694130224325688, guid: 2678839588f334940b904e1536ad394e, type: 3}
   - {fileID: 1853694130224325688, guid: a976b6da1fdc96f419350a7c8a96db26, type: 3}
+  NumberOfRooms: 0
+  Level: 1
   enemyPrefabs:
   - {fileID: 9196998947781604501, guid: 4566d7a159804f5418c8f3b8c0bde970, type: 3}
   - {fileID: 5241675573543593498, guid: 81e4870abcb31f84fb911e00967806bb, type: 3}
@@ -639,6 +640,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 634103837479056055, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7859181379788353365, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}
