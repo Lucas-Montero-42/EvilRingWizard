@@ -70,42 +70,43 @@ public class DungeonGenerator : MonoBehaviour
 
     public void CheckAllNeighbours(Room r)
     {
-        if (CheckNeighbour(r,Dir.UP))
+        bool addedNeighbour = false;
+
+        if (CheckNeighbour(r, Dir.UP))
         {
-            GetNeighbour(r, Dir.UP).ocupied = true;
-            GetNeighbour(r, Dir.UP).roomType = RoomTypes.EMPTY;
-            roomQueue.Enqueue(GetNeighbour(r, Dir.UP));
-            currentnumberOfRooms++;
-            Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * 10, 0, roomQueue.Peek().y * 10), Quaternion.identity);
+            AddNeighbour(r, Dir.UP);
+            addedNeighbour = true;
         }
         else if (CheckNeighbour(r, Dir.DOWN))
         {
-            GetNeighbour(r, Dir.DOWN).ocupied = true;
-            GetNeighbour(r, Dir.DOWN).roomType = RoomTypes.EMPTY;
-            roomQueue.Enqueue(GetNeighbour(r, Dir.DOWN));
-            currentnumberOfRooms++;
-            Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * 10, 0, roomQueue.Peek().y * 10), Quaternion.identity);
+            AddNeighbour(r, Dir.DOWN);
+            addedNeighbour = true;
         }
         else if (CheckNeighbour(r, Dir.LEFT))
         {
-            GetNeighbour(r, Dir.LEFT).ocupied = true;
-            GetNeighbour(r, Dir.LEFT).roomType = RoomTypes.EMPTY;
-            roomQueue.Enqueue(GetNeighbour(r, Dir.LEFT));
-            currentnumberOfRooms++;
-            Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * 10, 0, roomQueue.Peek().y * 10), Quaternion.identity);
+            AddNeighbour(r, Dir.LEFT);
+            addedNeighbour = true;
         }
         else if (CheckNeighbour(r, Dir.RIGHT))
         {
-            GetNeighbour(r, Dir.RIGHT).ocupied = true;
-            GetNeighbour(r, Dir.RIGHT).roomType = RoomTypes.EMPTY;
-            roomQueue.Enqueue(GetNeighbour(r, Dir.RIGHT));
-            currentnumberOfRooms++;
-            Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * 10, 0, roomQueue.Peek().y * 10), Quaternion.identity);
+            AddNeighbour(r, Dir.RIGHT);
+            addedNeighbour = true;
         }
-        else
+
+        if (!addedNeighbour && currentnumberOfRooms < NumberOfRooms)
         {
             roomQueue.Enqueue(startRoom);
         }
+    }
+
+    public void AddNeighbour(Room r, Dir direction)
+    {
+        Room neighbour = GetNeighbour(r, direction);
+        neighbour.ocupied = true;
+        neighbour.roomType = RoomTypes.EMPTY;
+        roomQueue.Enqueue(neighbour);
+        currentnumberOfRooms++;
+        Instantiate(DebugCube, new Vector3(neighbour.x * 10, 0, neighbour.y * 10), Quaternion.identity);
     }
     public bool CheckNeighbour(Room r, Dir d)
     {
@@ -124,12 +125,8 @@ public class DungeonGenerator : MonoBehaviour
         bool randomBool = random.NextDouble() >= 0.5;
         bool ocupied = !neighbour.ocupied;
         bool neighbourneighbour = ocupiedNeighboursNeighbours < 3;
-        bool roomsLeft = currentnumberOfRooms <= NumberOfRooms;
+        bool roomsLeft = currentnumberOfRooms < NumberOfRooms;
 
-        if (r.roomType == RoomTypes.START)
-        {
-            return ocupied && neighbourneighbour && roomsLeft;
-        }
         return ocupied && neighbourneighbour && roomsLeft && randomBool;
     }
     public Room GetNeighbour(Room r, Dir d)
