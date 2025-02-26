@@ -11,37 +11,37 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.1670046
+      value: -24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000047683716
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.9664047
+      value: -24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
@@ -199,11 +199,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactText: {fileID: 0}
   interactEnabled: 0
-  animator: {fileID: 0}
+  animator: {fileID: 3058575521120869557}
   OpenSource: {fileID: 4342025595120575821}
   CloseSource: {fileID: 7455388512687914909}
   InventoryPrefab: {fileID: 3000592445485612588, guid: 31ef47ef546fc05428ba425a9e104727,
     type: 3}
+  innateRing: {fileID: 0}
 --- !u!82 &4342025595120575821
 AudioSource:
   m_ObjectHideFlags: 0

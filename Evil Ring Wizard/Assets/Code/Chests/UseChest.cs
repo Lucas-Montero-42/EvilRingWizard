@@ -20,7 +20,7 @@ public class UseChest : MonoBehaviour
     }
     void Start()
     {
-        //interactText = CanvasSingleton.instance.InteractText;
+        interactText = GameManager.instance.InteractText;
         interactText.SetActive(false);
         InventoryPrefab.GetComponentInChildren<InventoryGridSystem>().innateRing = innateRing;
         ChestInventory = Instantiate(InventoryPrefab);
