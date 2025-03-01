@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 1853694130224325688, guid: 2678839588f334940b904e1536ad394e, type: 3}
   - {fileID: 1853694130224325688, guid: a976b6da1fdc96f419350a7c8a96db26, type: 3}
   NumberOfRooms: 0
-  Level: 2
+  Level: 1
   enemyPrefabs:
   - {fileID: 9196998947781604501, guid: 4566d7a159804f5418c8f3b8c0bde970, type: 3}
   - {fileID: 5241675573543593498, guid: 81e4870abcb31f84fb911e00967806bb, type: 3}

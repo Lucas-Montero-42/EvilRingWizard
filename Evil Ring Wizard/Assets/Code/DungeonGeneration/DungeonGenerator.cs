@@ -28,6 +28,9 @@ public class DungeonGenerator : MonoBehaviour
         }
 
     }
+    const int maxAttempts = 10;
+    int attemptCounter = 0;
+
     public GameObject DebugCube;
     public Room[,] floorPlan = new Room[20, 20];
     [SerializeField]private List<GameObject> roomPrefabs;
@@ -64,6 +67,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 i--;
             }
+            
         }
         Debug.Log(currentnumberOfRooms);
     }
@@ -95,7 +99,16 @@ public class DungeonGenerator : MonoBehaviour
 
         if (!addedNeighbour && currentnumberOfRooms < NumberOfRooms)
         {
-            roomQueue.Enqueue(startRoom);
+            if (attemptCounter < maxAttempts)
+            {
+                roomQueue.Enqueue(startRoom);
+                attemptCounter++;
+            }
+            else
+            {
+                //Usa un dead end
+                return;
+            }
         }
     }
 
