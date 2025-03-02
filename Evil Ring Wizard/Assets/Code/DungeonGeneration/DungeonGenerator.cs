@@ -118,7 +118,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 //Usa un dead end
                 deadEndUsed = true;
-                Debug.Log("DEAD END USED: " + deadEnds.Peek().x + "," + deadEnds.Peek().y);
+                //Debug.Log("DEAD END USED: " + deadEnds.Peek().x + "," + deadEnds.Peek().y);
                 roomQueue.Enqueue(deadEnds.Peek());
             }
         }
