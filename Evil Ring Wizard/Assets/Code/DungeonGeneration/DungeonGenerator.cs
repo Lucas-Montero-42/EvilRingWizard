@@ -28,13 +28,15 @@ public class DungeonGenerator : MonoBehaviour
         }
 
     }
-    const int maxAttempts = 10;
+    const int maxAttempts = 4;
     int attemptCounter = 0;
+    bool deadEndUsed = false;
 
     public GameObject DebugCube;
     public Room[,] floorPlan = new Room[20, 20];
     [SerializeField]private List<GameObject> roomPrefabs;
     [SerializeField]private Queue<Room> roomQueue = new Queue<Room>();
+    [SerializeField]private Queue<Room> deadEnds = new Queue<Room>();
     int maxrooms = 15;
     int minrooms = 7;
     [SerializeField] int NumberOfRooms;
@@ -61,13 +63,16 @@ public class DungeonGenerator : MonoBehaviour
         Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * 10, 0, roomQueue.Peek().y * 10), Quaternion.identity);
         for (int i = 1; i < NumberOfRooms; i++)
         {
-            Debug.Log(roomQueue.Peek().roomType);
             CheckAllNeighbours(roomQueue.Dequeue());
             if (roomQueue.Peek().roomType == RoomTypes.START)
             {
                 i--;
             }
-            
+            if (deadEndUsed)
+            {
+                i--;
+                deadEndUsed = false;
+            }
         }
         Debug.Log(currentnumberOfRooms);
     }
@@ -80,22 +85,27 @@ public class DungeonGenerator : MonoBehaviour
         {
             AddNeighbour(r, Dir.UP);
             addedNeighbour = true;
+            attemptCounter = 0;
         }
         else if (CheckNeighbour(r, Dir.DOWN))
         {
             AddNeighbour(r, Dir.DOWN);
             addedNeighbour = true;
+            attemptCounter = 0;
         }
         else if (CheckNeighbour(r, Dir.LEFT))
         {
             AddNeighbour(r, Dir.LEFT);
             addedNeighbour = true;
+            attemptCounter = 0;
         }
         else if (CheckNeighbour(r, Dir.RIGHT))
         {
             AddNeighbour(r, Dir.RIGHT);
             addedNeighbour = true;
+            attemptCounter = 0;
         }
+       
 
         if (!addedNeighbour && currentnumberOfRooms < NumberOfRooms)
         {
@@ -107,7 +117,9 @@ public class DungeonGenerator : MonoBehaviour
             else
             {
                 //Usa un dead end
-                return;
+                deadEndUsed = true;
+                Debug.Log("DEAD END USED: " + deadEnds.Peek().x + "," + deadEnds.Peek().y);
+                roomQueue.Enqueue(deadEnds.Peek());
             }
         }
     }
@@ -139,6 +151,11 @@ public class DungeonGenerator : MonoBehaviour
         bool ocupied = !neighbour.ocupied;
         bool neighbourneighbour = ocupiedNeighboursNeighbours < 3;
         bool roomsLeft = currentnumberOfRooms < NumberOfRooms;
+
+        if (!(ocupied && neighbourneighbour && roomsLeft) && r.roomType != RoomTypes.START)
+        {
+            deadEnds.Enqueue(r);
+        }
 
         return ocupied && neighbourneighbour && roomsLeft && randomBool;
     }
