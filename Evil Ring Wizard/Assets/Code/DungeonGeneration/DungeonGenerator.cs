@@ -37,7 +37,7 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField]private List<GameObject> roomPrefabs;
     private Queue<Room> roomQueue = new Queue<Room>();
     private Queue<Room> deadEnds = new Queue<Room>();
-    [SerializeField] int maxrooms = 15;
+    int maxrooms = 15;
     int minrooms = 7;
     [SerializeField] int NumberOfRooms;
     int currentnumberOfRooms = 1;
@@ -75,6 +75,13 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
         Debug.Log(currentnumberOfRooms);
+        for (int x = 0; x < 20; x++)
+        {
+            for (int y = 0; y < 20; y++)
+            {
+                AsignRoomPrefab(floorPlan[x, y]);
+            }
+        }
     }
 
     public void CheckAllNeighbours(Room r)
@@ -121,7 +128,6 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
     }
-
     public void AddNeighbour(Room r, Dir direction)
     {
         Room neighbour = GetNeighbour(r, direction);
@@ -204,6 +210,137 @@ public class DungeonGenerator : MonoBehaviour
         {
             // Si está fuera de los límites, devolver null o manejar el caso según sea necesario
             return null;
+        }
+    }
+    public void AsignRoomPrefab(Room r)
+    {
+        bool[] disposition = new bool[4];
+        for (int i = 0; i< disposition.Length;i++)
+        {
+            disposition[i] = false;
+        }
+        int numberOfNeighbours = 0;
+        if (GetNeighbour(r, Dir.UP) != null && GetNeighbour(r, Dir.UP).ocupied)
+        {
+            disposition[0] = true;
+            numberOfNeighbours++;
+        }
+        if (GetNeighbour(r, Dir.DOWN) != null && GetNeighbour(r, Dir.DOWN).ocupied)
+        {
+            disposition[1] = true;
+            numberOfNeighbours++;
+        }
+        if (GetNeighbour(r, Dir.LEFT) != null && GetNeighbour(r, Dir.LEFT).ocupied)
+        {
+            disposition[2] = true;
+            numberOfNeighbours++;
+        }
+        if (GetNeighbour(r, Dir.RIGHT) != null && GetNeighbour(r, Dir.RIGHT).ocupied)
+        {
+            disposition[3] = true;
+            numberOfNeighbours++;
+        }
+
+        if (numberOfNeighbours == 1)
+        {
+            for (int i = 0; i < disposition.Length; i++)
+            {
+                if (disposition[i] == true)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            //direction is up
+                            Instantiate(roomPrefabs[0], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                            break;
+                        case 1:
+                            //direction is down
+                            Instantiate(roomPrefabs[0], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                            break;
+                        case 2:
+                            //direction is left
+                            Instantiate(roomPrefabs[0], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                            break;
+                        case 3:
+                            //direction is right
+                            Instantiate(roomPrefabs[0], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                            break;
+                        default:
+                            break;
+                    }
+                    return;
+                }
+            }
+        }
+        else if (numberOfNeighbours == 2)
+        {
+            if (disposition[0]==true && disposition[1]==true)
+            {
+                Instantiate(roomPrefabs[2], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is |
+            }
+            else if (disposition[2] == true && disposition[3] == true)
+            {
+                Instantiate(roomPrefabs[2], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is -
+            }
+            else if (disposition[0] == true && disposition[2] == true)
+            {
+                Instantiate(roomPrefabs[1], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is _|
+            }
+            else if (disposition[0] == true && disposition[3] == true) 
+            {
+                Instantiate(roomPrefabs[1], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is L
+            }
+            else if (disposition[1] == true && disposition[2] == true)
+            {
+                Instantiate(roomPrefabs[1], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is -|
+            }
+            else if (disposition[1] == true && disposition[3] == true)
+            {
+                Instantiate(roomPrefabs[1], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is |-
+            }
+            else
+            {
+                Debug.LogError("HELL NAH");
+            }
+        }
+        else if (numberOfNeighbours == 3)
+        {
+            if (disposition[0] == true && disposition[2] == true && disposition[3] == true)
+            {
+                Instantiate(roomPrefabs[3], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is _|_
+            }
+            else if (disposition[0] == true && disposition[1] == true && disposition[3] == true)
+            {
+                Instantiate(roomPrefabs[3], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is |-
+            }
+
+            else if (disposition[0] == true && disposition[1] == true && disposition[2] == true)
+            {
+                Instantiate(roomPrefabs[3], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is -|
+            }
+            else if (disposition[1] == true && disposition[2] == true && disposition[3] == true)
+            {
+                Instantiate(roomPrefabs[3], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity); // Cambiar rotación
+                // Direction is T
+            }
+            else
+            {
+                Debug.LogError("HELL NAH");
+            }
+        }
+        else if (numberOfNeighbours == 4)
+        {
+            Instantiate(roomPrefabs[4], new Vector3(r.x * 10, 0, r.y * 10), Quaternion.identity);
+            // Direction is all
         }
     }
 }
