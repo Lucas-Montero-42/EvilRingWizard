@@ -35,9 +35,9 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject DebugCube;
     public Room[,] floorPlan = new Room[20, 20];
     [SerializeField]private List<GameObject> roomPrefabs;
-    [SerializeField]private Queue<Room> roomQueue = new Queue<Room>();
-    [SerializeField]private Queue<Room> deadEnds = new Queue<Room>();
-    int maxrooms = 15;
+    private Queue<Room> roomQueue = new Queue<Room>();
+    private Queue<Room> deadEnds = new Queue<Room>();
+    [SerializeField] int maxrooms = 15;
     int minrooms = 7;
     [SerializeField] int NumberOfRooms;
     int currentnumberOfRooms = 1;
@@ -116,9 +116,7 @@ public class DungeonGenerator : MonoBehaviour
             }
             else
             {
-                //Usa un dead end
                 deadEndUsed = true;
-                //Debug.Log("DEAD END USED: " + deadEnds.Peek().x + "," + deadEnds.Peek().y);
                 roomQueue.Enqueue(deadEnds.Peek());
             }
         }
@@ -127,23 +125,37 @@ public class DungeonGenerator : MonoBehaviour
     public void AddNeighbour(Room r, Dir direction)
     {
         Room neighbour = GetNeighbour(r, direction);
-        neighbour.ocupied = true;
-        neighbour.roomType = RoomTypes.EMPTY;
-        roomQueue.Enqueue(neighbour);
-        currentnumberOfRooms++;
-        Instantiate(DebugCube, new Vector3(neighbour.x * 10, 0, neighbour.y * 10), Quaternion.identity);
+
+        // Verificar si el vecino es válido (no null)
+        if (neighbour != null)
+        {
+            neighbour.ocupied = true;
+            neighbour.roomType = RoomTypes.EMPTY;
+            roomQueue.Enqueue(neighbour);
+            currentnumberOfRooms++;
+            Instantiate(DebugCube, new Vector3(neighbour.x * 10, 0, neighbour.y * 10), Quaternion.identity);
+        }
     }
     public bool CheckNeighbour(Room r, Dir d)
     {
         Room neighbour = GetNeighbour(r, d);
+
+        // Si el vecino es null (fuera de los límites), no es válido
+        if (neighbour == null)
+        {
+            return false;
+        }
+
         int ocupiedNeighboursNeighbours = 0;
-        if (GetNeighbour(neighbour, Dir.UP).ocupied)
+
+        // Verificar los vecinos del vecino
+        if (GetNeighbour(neighbour, Dir.UP) != null && GetNeighbour(neighbour, Dir.UP).ocupied)
             ocupiedNeighboursNeighbours++;
-        if (GetNeighbour(neighbour, Dir.DOWN).ocupied)
+        if (GetNeighbour(neighbour, Dir.DOWN) != null && GetNeighbour(neighbour, Dir.DOWN).ocupied)
             ocupiedNeighboursNeighbours++;
-        if (GetNeighbour(neighbour, Dir.LEFT).ocupied)
+        if (GetNeighbour(neighbour, Dir.LEFT) != null && GetNeighbour(neighbour, Dir.LEFT).ocupied)
             ocupiedNeighboursNeighbours++;
-        if (GetNeighbour(neighbour, Dir.RIGHT).ocupied)
+        if (GetNeighbour(neighbour, Dir.RIGHT) != null && GetNeighbour(neighbour, Dir.RIGHT).ocupied)
             ocupiedNeighboursNeighbours++;
 
         System.Random random = new System.Random();
@@ -161,27 +173,37 @@ public class DungeonGenerator : MonoBehaviour
     }
     public Room GetNeighbour(Room r, Dir d)
     {
-        
-        Room neighbour;
+        int x = r.x;
+        int y = r.y;
+
         switch (d)
         {
             case Dir.UP:
-                neighbour = floorPlan[r.x, r.y+1];
+                y += 1;
                 break;
             case Dir.DOWN:
-                neighbour = floorPlan[r.x, r.y-1];
+                y -= 1;
                 break;
             case Dir.LEFT:
-                neighbour = floorPlan[r.x-1, r.y];
+                x -= 1;
                 break;
             case Dir.RIGHT:
-                neighbour = floorPlan[r.x+1, r.y];
+                x += 1;
                 break;
             default:
-                neighbour = floorPlan[0, 0];
-                Debug.LogError("No Neigbours");
-                break;
+                Debug.LogError("Dirección no válida");
+                return null;
         }
-        return neighbour;
+
+        // Verificar si las coordenadas están dentro de los límites de la matriz
+        if (x >= 0 && x < 20 && y >= 0 && y < 20)
+        {
+            return floorPlan[x, y];
+        }
+        else
+        {
+            // Si está fuera de los límites, devolver null o manejar el caso según sea necesario
+            return null;
+        }
     }
 }
