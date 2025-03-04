@@ -48,12 +48,6 @@ public class DungeonGenerator : MonoBehaviour
     public int roomSize = 12;
     float adjustingToGidDistance;
 
-    private void Awake()
-    {
-
-        
-
-    }
     private void Start()
     {
         //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
@@ -66,7 +60,7 @@ public class DungeonGenerator : MonoBehaviour
                 Debug.LogError("Se alcanzó el máximo de intentos sin generar una mazmorras válida. Tienes muy mala suerte colega");
             }
         }
-        Debug.Log(attemptCount);
+        //Debug.Log(attemptCount);
     }
 
     private bool GenerateDungeon()
@@ -108,7 +102,7 @@ public class DungeonGenerator : MonoBehaviour
             return false;
         }
 
-        Debug.Log(currentnumberOfRooms);
+        //Debug.Log(currentnumberOfRooms);
         for (int x = 0; x < 20; x++)
         {
             for (int y = 0; y < 20; y++)
