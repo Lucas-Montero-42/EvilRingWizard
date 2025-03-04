@@ -35,6 +35,7 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject DebugCube;
     public Room[,] floorPlan = new Room[20, 20];
     [SerializeField]private List<GameObject> roomPrefabs;
+    public GameObject treasureChest;
     private Queue<Room> roomQueue = new Queue<Room>();
     private Queue<Room> deadEnds = new Queue<Room>();
     int maxrooms = 15;
@@ -101,6 +102,8 @@ public class DungeonGenerator : MonoBehaviour
         {
             return false;
         }
+
+        AssignSpecialRooms();
 
         //Debug.Log(currentnumberOfRooms);
         for (int x = 0; x < 20; x++)
@@ -277,6 +280,25 @@ public class DungeonGenerator : MonoBehaviour
         bossRoom.roomType = RoomTypes.BOSS;
         Instantiate(DebugCube, new Vector3(bossRoom.x * roomSize + adjustingToGidDistance, 0, bossRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
         return true;
+    }
+    public void AssignSpecialRooms()
+    {
+        List<Room> ocupiedRooms = new List<Room>();
+        Room treasureRoom;
+        for (int x = 0; x < 20; x++)
+        {
+            for (int y = 0; y < 20; y++)
+            {
+                if (floorPlan[x, y].ocupied && floorPlan[x, y].roomType != RoomTypes.START && floorPlan[x,y].roomType != RoomTypes.BOSS)
+                {
+                    ocupiedRooms.Add(floorPlan[x,y]);
+                }
+            }
+        }
+        treasureRoom = ocupiedRooms[UnityEngine.Random.Range(0, ocupiedRooms.Count)];
+        treasureRoom.roomType = RoomTypes.TREASURE;
+        Instantiate(treasureChest, new Vector3(treasureRoom.x * roomSize + adjustingToGidDistance, -roomSize/2 + treasureChest.transform.localScale.y, treasureRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+
     }
     public void AsignRoomPrefab(Room r)
     {

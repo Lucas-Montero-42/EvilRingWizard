@@ -8,6 +8,5 @@ public enum RoomTypes
     EMPTY,
     ENEMIES,
     TREASURE,
-    BOSS,
-    INVALID
+    BOSS
 }

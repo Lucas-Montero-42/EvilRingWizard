@@ -42,37 +42,37 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -48
+      value: 0.5829954
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24
+      value: -2.9664047
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8090eeea7186318419148719ba89d856,
         type: 3}
@@ -261,9 +261,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b859b48280c2cf647b67d4f457c7c1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commonRings: []
-  rareRings: []
-  legendaryRings: []
+  commonRings:
+  - {fileID: 11400000, guid: d24ff9deb59dade44a504970ed1e56b4, type: 2}
+  rareRings:
+  - {fileID: 11400000, guid: 55d848d06f995594fa40c4abaa590686, type: 2}
+  - {fileID: 11400000, guid: a362c0da22dda6e4489b34e3e0208edf, type: 2}
+  legendaryRings:
+  - {fileID: 11400000, guid: 62dbc55dc7a43b041b183564ca074ecd, type: 2}
   ChestQuality: 1
 --- !u!82 &716447871813337479
 AudioSource:

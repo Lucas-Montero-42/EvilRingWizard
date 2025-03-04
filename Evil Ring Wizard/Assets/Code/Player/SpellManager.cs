@@ -37,13 +37,14 @@ public class SpellManager : MonoBehaviour
         {
             s.canShoot = true;
         }
-
         handsInventory.dropItem += AddSpell;
         handsInventory.pickUpItem += RemoveSpell;
-
     }
     private void Start()
     {
+        //handsInventory = GameManager.instance.HandsMenuScreen.GetComponentInChildren<InventoryGridSystem>();
+        //handsInventory.dropItem += AddSpell;
+        //handsInventory.pickUpItem += RemoveSpell;
         WeaponDiplay();
     }
 

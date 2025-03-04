@@ -19,6 +19,12 @@ public class HandManager : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        //handsInventory = GameManager.instance.HandsMenuScreen.GetComponentInChildren<InventoryGridSystem>();
+        //handsInventory.dropItem += AddRings;
+        //handsInventory.pickUpItem += RemoveRings;
+    }
 
     private void AddRings()
     {
