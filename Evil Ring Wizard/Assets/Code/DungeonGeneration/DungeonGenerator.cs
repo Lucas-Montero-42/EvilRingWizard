@@ -51,24 +51,34 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Start()
     {
+        if (roomQueue == null) roomQueue = new Queue<Room>();
+        if (deadEnds == null) deadEnds = new Queue<Room>();
+        floorPlan = new Room[20, 20];
         //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
         int attemptCount = 0;
-        while (!GenerateDungeon() && attemptCount < 1000)  // Máximo 1000 intentos
+        while (!GenerateDungeon() && attemptCount < 100)  // Máximo 1000 intentos
         {
             attemptCount++;
-            if (attemptCount >= 1000)
+            Debug.Log("Número de intentos: " + attemptCount);
+            if (attemptCount >= 100)
             {
                 Debug.LogError("Se alcanzó el máximo de intentos sin generar una mazmorras válida. Tienes muy mala suerte colega");
+                return;
             }
         }
         //Debug.Log(attemptCount);
     }
-
     private bool GenerateDungeon()
     {
+        Debug.Log("Generando mazmorras...");
         roomQueue = new Queue<Room>();
         deadEnds = new Queue<Room>();
         floorPlan = new Room[20, 20];
+        if (floorPlan == null)
+        {
+            Debug.LogError("floorPlan no se inicializó correctamente.");
+            return false;
+        }
         adjustingToGidDistance = roomSize * -10;
         for (int x = 0; x < 20; x++)
         {
@@ -80,14 +90,25 @@ public class DungeonGenerator : MonoBehaviour
         NumberOfRooms = Mathf.Clamp((int)(UnityEngine.Random.Range(0, 2) + 5 + Level * 2.6f), minrooms, maxrooms);
         currentnumberOfRooms = 1;
         startRoom = floorPlan[10, 10];
+        if (startRoom == null)
+        {
+            Debug.LogError("startRoom no se inicializó correctamente.");
+            return false; // redundante pero a estas alturas ya no se que mas hacer
+        }
         roomQueue.Enqueue(startRoom);
         startRoom.ocupied = true;
         startRoom.roomType = RoomTypes.START;
         //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
         for (int i = 1; i < NumberOfRooms; i++)
         {
-            CheckAllNeighbours(roomQueue.Dequeue());
-            if (roomQueue.Peek().roomType == RoomTypes.START)
+            if (roomQueue.Count == 0)
+            {
+                Debug.LogError("roomQueue está vacío antes de generar todas las habitaciones.");
+                return false; // Salir del método si no hay más habitaciones para procesar
+            }
+            Room currentRoom = roomQueue.Dequeue(); 
+            CheckAllNeighbours(currentRoom);
+            if (roomQueue.Count > 0 && roomQueue.Peek().roomType == RoomTypes.START)
             {
                 i--;
             }
@@ -122,6 +143,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         bool addedNeighbour = false;
 
+        // Primero intentamos explorar todos los vecinos
         if (CheckNeighbour(r, Dir.UP))
         {
             AddNeighbour(r, Dir.UP);
@@ -146,23 +168,33 @@ public class DungeonGenerator : MonoBehaviour
             addedNeighbour = true;
             attemptCounter = 0;
         }
-       
 
+        // Si no se encontraron vecinos y hay más habitaciones que generar
         if (!addedNeighbour && currentnumberOfRooms < NumberOfRooms)
         {
+            // Intentamos reusar una habitación de deadEnd
             if (attemptCounter < maxAttempts)
             {
+                // Usamos la StartRoom si no hemos intentado demasiado
                 roomQueue.Enqueue(startRoom);
                 attemptCounter++;
             }
+            // Si no se puede continuar desde StartRoom, tratamos con deadEnds
+            else if (deadEnds.Count > 0)
+            {
+                deadEndUsed = true;  // Marcamos que se está usando un deadEnd
+                roomQueue.Enqueue(deadEnds.Dequeue());  // Retomamos un deadEnd
+                attemptCounter = 0;  // Reiniciamos los intentos
+            }
             else
             {
-                deadEndUsed = true;
-                roomQueue.Enqueue(deadEnds.Peek());
-                attemptCounter = 0;
+                Debug.LogError("No hay más habitaciones disponibles para continuar.");
+                return; // Salir del método si no hay más habitaciones disponibles
             }
         }
     }
+
+
     public void AddNeighbour(Room r, Dir direction)
     {
         Room neighbour = GetNeighbour(r, direction);
@@ -199,14 +231,18 @@ public class DungeonGenerator : MonoBehaviour
         if (GetNeighbour(neighbour, Dir.RIGHT) != null && GetNeighbour(neighbour, Dir.RIGHT).ocupied)
             ocupiedNeighboursNeighbours++;
 
-        System.Random random = new System.Random();
-        bool randomBool = random.NextDouble() >= 0.5;
+        bool randomBool = UnityEngine.Random.value >= 0.5f;
         bool ocupied = !neighbour.ocupied;
         bool neighbourneighbour = ocupiedNeighboursNeighbours < 3;
         bool roomsLeft = currentnumberOfRooms < NumberOfRooms;
 
         if (!(ocupied && neighbourneighbour && roomsLeft) && r.roomType != RoomTypes.START)
         {
+            if (deadEnds == null)
+            {
+                deadEnds = new Queue<Room>(); // Inicializar deadEnds si es null
+            }
+
             if (!deadEnds.Contains(r))
             {
                 deadEnds.Enqueue(r);
@@ -273,7 +309,7 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
-        if (GetNumberOffNeighbours(bossRoom) !=1 )
+        if (bossRoom == null || GetNumberOffNeighbours(bossRoom) !=1 )
         {
             return false;
         }
@@ -295,9 +331,13 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
-        treasureRoom = ocupiedRooms[UnityEngine.Random.Range(0, ocupiedRooms.Count)];
-        treasureRoom.roomType = RoomTypes.TREASURE;
-        Instantiate(treasureChest, new Vector3(treasureRoom.x * roomSize + adjustingToGidDistance, -roomSize/2 + treasureChest.transform.localScale.y, treasureRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+        if (ocupiedRooms.Count > 0)
+        {
+            treasureRoom = ocupiedRooms[UnityEngine.Random.Range(0, ocupiedRooms.Count)];
+            treasureRoom.roomType = RoomTypes.TREASURE;
+            Instantiate(treasureChest, new Vector3(treasureRoom.x * roomSize + adjustingToGidDistance, -roomSize / 2 + treasureChest.transform.localScale.y, treasureRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+        }
+        
 
     }
     public void AsignRoomPrefab(Room r)
