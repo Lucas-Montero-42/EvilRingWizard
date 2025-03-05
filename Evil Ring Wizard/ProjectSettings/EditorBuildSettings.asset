@@ -5,10 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Testing.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/Dungeon.unity
     guid: d46eb1b84ab5849458320a34faec5dcc
+  - enabled: 1
+    path: Assets/Scenes/Inventory.unity
+    guid: bfd248ba2af45f347a257ab0cb144e91
+  - enabled: 1
+    path: Assets/Scenes/Level 1 Dungeon.unity
+    guid: 4abd7547b2d45e7458efaf9a8d5ef0da
+  - enabled: 1
+    path: Assets/Scenes/Level 2 Dungeon.unity
+    guid: 55e3b0dda7adece488be607a31adda2d
+  - enabled: 1
+    path: Assets/Scenes/Level 3 Dungeon.unity
+    guid: 60eff4129d59c9a4abfa556c5d1c9c7b
   m_configObjects: {}

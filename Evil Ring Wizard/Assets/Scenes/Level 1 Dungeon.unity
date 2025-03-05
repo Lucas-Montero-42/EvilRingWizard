@@ -385,7 +385,6 @@ GameObject:
   - component: {fileID: 1080164479}
   - component: {fileID: 1080164478}
   - component: {fileID: 1080164480}
-  - component: {fileID: 1080164481}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -493,18 +492,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &1080164481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080164477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e93c84f6e5b0d7047895cef2184785b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1629123416
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576545008eab305459a37b7c8f9d564c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugCube: {fileID: 5145142903298916283, guid: bf47b28b8812f5e4093d9a61aa287fa6,
+  ExitDoor: {fileID: 5192515956042703581, guid: 09a74459ff9d48b4da2a796c68cdc288,
     type: 3}
   roomPrefabs:
   - {fileID: 1853694130224325688, guid: 2121b873cb7c4f14eaaa5880bfedf76b, type: 3}
@@ -545,7 +532,7 @@ MonoBehaviour:
   treasureChest: {fileID: 6167195822697806534, guid: bd01da3ab69487547a9f92829a6d3cfa,
     type: 3}
   NumberOfRooms: 0
-  Level: 3
+  Level: 1
   enemyPrefabs:
   - {fileID: 9196998947781604501, guid: 4566d7a159804f5418c8f3b8c0bde970, type: 3}
   - {fileID: 5241675573543593498, guid: 81e4870abcb31f84fb911e00967806bb, type: 3}

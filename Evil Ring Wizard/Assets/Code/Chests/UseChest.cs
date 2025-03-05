@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UseChest : MonoBehaviour
@@ -36,6 +37,7 @@ public class UseChest : MonoBehaviour
             GameManager.instance.HandsMenuScreen.SetActive(true);
             ChestInventory.SetActive(true);
             GameManager.instance.Pause();
+            interactText.GetComponent<TextMeshPro>().text = "Press E to open";
             interactText.SetActive(false);
         }
         if (Input.GetKey(KeyCode.Tab) && open && !GameManager.instance.holdingObject)// && GameManager.instance.state == GameManager.GameStates.Chest)

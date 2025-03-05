@@ -32,7 +32,7 @@ public class DungeonGenerator : MonoBehaviour
     int attemptCounter = 0;
     bool deadEndUsed = false;
 
-    public GameObject DebugCube;
+    public GameObject ExitDoor;
     public Room[,] floorPlan = new Room[20, 20];
     [SerializeField]private List<GameObject> roomPrefabs;
     public GameObject treasureChest;
@@ -314,7 +314,7 @@ public class DungeonGenerator : MonoBehaviour
             return false;
         }
         bossRoom.roomType = RoomTypes.BOSS;
-        Instantiate(DebugCube, new Vector3(bossRoom.x * roomSize + adjustingToGidDistance, 0, bossRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+        Instantiate(ExitDoor, new Vector3(bossRoom.x * roomSize + adjustingToGidDistance, ExitDoor.transform.localScale.y - (roomSize / 2), bossRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
         return true;
     }
     public void AssignSpecialRooms()
