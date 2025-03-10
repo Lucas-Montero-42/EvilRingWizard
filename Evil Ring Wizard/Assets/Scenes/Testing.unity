@@ -1828,14 +1828,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576545008eab305459a37b7c8f9d564c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugCube: {fileID: 5145142903298916283, guid: bf47b28b8812f5e4093d9a61aa287fa6,
-    type: 3}
+  ExitDoor: {fileID: 0}
   roomPrefabs:
   - {fileID: 1853694130224325688, guid: 2121b873cb7c4f14eaaa5880bfedf76b, type: 3}
   - {fileID: 1853694130224325688, guid: 5e6a9b6a35850224784224ea8836e8aa, type: 3}
   - {fileID: 1853694130224325688, guid: 0cc74acbbb57d6245bcd8e3e43630358, type: 3}
   - {fileID: 1853694130224325688, guid: 2678839588f334940b904e1536ad394e, type: 3}
   - {fileID: 1853694130224325688, guid: a976b6da1fdc96f419350a7c8a96db26, type: 3}
+  oneDoorRooms: []
+  twoDoorOpositeRooms: []
+  twoDoorCloseRooms: []
+  threeDoorRooms: []
+  fourDoorRooms: []
   treasureChest: {fileID: 6167195822697806534, guid: bd01da3ab69487547a9f92829a6d3cfa,
     type: 3}
   NumberOfRooms: 0

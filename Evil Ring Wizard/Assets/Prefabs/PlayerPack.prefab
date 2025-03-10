@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: gunAnimator
       value: 
       objectReference: {fileID: 470586091219737899}
+    - target: {fileID: 5727271152965728298, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
+        type: 3}
+      propertyPath: playerSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7859181379788353365, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}
       propertyPath: m_LocalPosition.x
