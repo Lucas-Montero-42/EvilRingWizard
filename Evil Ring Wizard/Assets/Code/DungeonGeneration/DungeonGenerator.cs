@@ -34,6 +34,8 @@ public class DungeonGenerator : MonoBehaviour
     bool deadEndUsed = false;
 
     public GameObject ExitDoor;
+    public GameObject DungeonParentObject;
+    private GameObject DungeonParent;
     public Room[,] floorPlan = new Room[20, 20];
     [SerializeField]private List<GameObject> roomPrefabs;
     [SerializeField]private List<GameObject> oneDoorRooms;
@@ -62,6 +64,35 @@ public class DungeonGenerator : MonoBehaviour
         floorPlan = new Room[20, 20];
         //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
         int attemptCount = 0;
+        createDungeonParent();
+        while (!GenerateDungeon() && attemptCount < 100)  // Máximo 1000 intentos
+        {
+            attemptCount++;
+            Debug.Log("Número de intentos: " + attemptCount);
+            if (attemptCount >= 100)
+            {
+                Debug.LogError("Se alcanzó el máximo de intentos sin generar una mazmorras válida. Tienes muy mala suerte colega");
+                return;
+            }
+        }
+        //Debug.Log(attemptCount);
+        GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+    private void createDungeonParent()
+    {
+        GameObject parent = Instantiate(DungeonParentObject,Vector3.zero, Quaternion.identity);
+        DungeonParent = parent;
+    }
+    public void RESETDUNGEON()
+    {
+        Destroy(DungeonParent);
+        createDungeonParent();
+        if (roomQueue == null) roomQueue = new Queue<Room>();
+        if (deadEnds == null) deadEnds = new Queue<Room>();
+        floorPlan = new Room[20, 20];
+        //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
+        int attemptCount = 0;
+        createDungeonParent();
         while (!GenerateDungeon() && attemptCount < 100)  // Máximo 1000 intentos
         {
             attemptCount++;
@@ -329,7 +360,7 @@ public class DungeonGenerator : MonoBehaviour
         Instantiate(ExitDoor, new Vector3(bossRoom.x * roomSize + adjustingToGidDistance,
                                           (ExitDoor.transform.localScale.y/2),
                                           bossRoom.y * roomSize + adjustingToGidDistance),
-                                          Quaternion.identity);
+                                          Quaternion.identity,DungeonParent.transform);
         return true;
     }
     public void AssignSpecialRooms()
@@ -353,8 +384,8 @@ public class DungeonGenerator : MonoBehaviour
             Instantiate(treasureChest, new Vector3(treasureRoom.x * roomSize + adjustingToGidDistance,
                                                    0.1f,
                                                    treasureRoom.y * roomSize + adjustingToGidDistance), 
-                                                   Quaternion.identity
-                                                   );
+                                                   Quaternion.identity,
+                                                   DungeonParent.transform);
         }
         
 
@@ -401,19 +432,19 @@ public class DungeonGenerator : MonoBehaviour
                     {
                         case 0:
                             //direction is up
-                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0)); // Cambiar rotación
+                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0), DungeonParent.transform); 
                             break;
                         case 1:
                             //direction is down
-                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0)); // Cambiar rotación
+                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0), DungeonParent.transform); 
                             break;
                         case 2:
                             //direction is left
-                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0,180,0)); // Cambiar rotación
+                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0,180,0), DungeonParent.transform); 
                             break;
                         case 3:
                             //direction is right
-                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity); // Cambiar rotación
+                            Instantiate(oneDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity, DungeonParent.transform); 
                             break;
                         default:
                             break;
@@ -429,32 +460,32 @@ public class DungeonGenerator : MonoBehaviour
 
             if (disposition[0]==true && disposition[1]==true)
             {
-                Instantiate(twoDoorOpositeRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0)); // Cambiar rotación
+                Instantiate(twoDoorOpositeRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is |
             }
             else if (disposition[2] == true && disposition[3] == true)
             {
-                Instantiate(twoDoorOpositeRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity); // Cambiar rotación
+                Instantiate(twoDoorOpositeRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity, DungeonParent.transform); // Cambiar rotación
                 // Direction is -
             }
             else if (disposition[0] == true && disposition[2] == true)
             {
-                Instantiate(twoDoorCloseRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0)); // Cambiar rotación
+                Instantiate(twoDoorCloseRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is _|
             }
             else if (disposition[0] == true && disposition[3] == true) 
             {
-                Instantiate(twoDoorCloseRooms[rand2], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity); // Cambiar rotación
+                Instantiate(twoDoorCloseRooms[rand2], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity, DungeonParent.transform); // Cambiar rotación
                 // Direction is L
             }
             else if (disposition[1] == true && disposition[2] == true)
             {
-                Instantiate(twoDoorCloseRooms[rand2], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 180, 0)); // Cambiar rotación
+                Instantiate(twoDoorCloseRooms[rand2], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 180, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is -|
             }
             else if (disposition[1] == true && disposition[3] == true)
             {
-                Instantiate(twoDoorCloseRooms[rand2], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0)); // Cambiar rotación
+                Instantiate(twoDoorCloseRooms[rand2], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is |-
             }
             else
@@ -468,23 +499,23 @@ public class DungeonGenerator : MonoBehaviour
 
             if (disposition[0] == true && disposition[2] == true && disposition[3] == true)
             {
-                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 180, 0)); // Cambiar rotación
+                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 180, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is _|_
             }
             else if (disposition[0] == true && disposition[1] == true && disposition[3] == true)
             {
-                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0)); // Cambiar rotación
+                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is |-
             }
 
             else if (disposition[0] == true && disposition[1] == true && disposition[2] == true)
             {
-                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0)); // Cambiar rotación
+                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, 90, 0), DungeonParent.transform); // Cambiar rotación
                 // Direction is -|
             }
             else if (disposition[1] == true && disposition[2] == true && disposition[3] == true)
             {
-                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity); // Cambiar rotación
+                Instantiate(threeDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity, DungeonParent.transform); // Cambiar rotación
                 // Direction is T
             }
             else
@@ -495,7 +526,7 @@ public class DungeonGenerator : MonoBehaviour
         else if (numberOfNeighbours == 4)
         {
             int rand = (int)UnityEngine.Random.Range(0, fourDoorRooms.Count - 1);
-            Instantiate(fourDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+            Instantiate(fourDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity, DungeonParent.transform);
             // Direction is all
         }
     }
