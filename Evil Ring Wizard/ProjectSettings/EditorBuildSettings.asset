@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 3 Dungeon.unity
     guid: 60eff4129d59c9a4abfa556c5d1c9c7b
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: 5085d5539cf11b34cb7f4131b678732f
   m_configObjects: {}

@@ -395,6 +395,7 @@ public class DungeonGenerator : MonoBehaviour
                 if (disposition[i] == true)
                 {
                     int rand = (int)UnityEngine.Random.Range(0, oneDoorRooms.Count - 1);
+                    Debug.Log(rand);
 
                     switch (i)
                     {
@@ -500,7 +501,7 @@ public class DungeonGenerator : MonoBehaviour
     }
     private void AddDoors(Room room)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
     public int GetNumberOffNeighbours(Room r)
     {

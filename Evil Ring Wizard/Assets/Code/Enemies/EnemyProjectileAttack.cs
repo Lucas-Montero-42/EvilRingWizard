@@ -35,7 +35,7 @@ public class EnemyProjectileAttack : MonoBehaviour
 
         Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * g * h);
         Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * (h) / g) + Mathf.Sqrt(2 * (displacementY - h) / g));
-        Debug.Log(velocityXZ + velocityY);
+
         return velocityXZ+velocityY;
     }
 

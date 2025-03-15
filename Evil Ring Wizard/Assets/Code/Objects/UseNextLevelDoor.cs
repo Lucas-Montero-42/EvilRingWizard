@@ -25,13 +25,12 @@ public class UseNextLevelDoor : MonoBehaviour
     }
     IEnumerator LoadNewLevel()
     {
+
+        GameManager.instance.player.GetComponent<CharacterController>().enabled = false;
         GameManager.instance.player.transform.position = new Vector3(0, 0, 0);
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
+        GameManager.instance.player.GetComponent<CharacterController>().enabled = true;
         SceneManager.LoadScene(level);
+        yield return new WaitForEndOfFrame();
     }
     private void OnTriggerEnter(Collider other)
     {

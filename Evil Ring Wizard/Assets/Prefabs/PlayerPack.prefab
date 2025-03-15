@@ -73,6 +73,11 @@ PrefabInstance:
       propertyPath: handsInventory
       value: 
       objectReference: {fileID: 7465241909949305079}
+    - target: {fileID: 5032830735875123978, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5594903641468203603, guid: 5f8f5580f9d3e7e4e8087306c7d0b64c,
         type: 3}
       propertyPath: m_IsActive
