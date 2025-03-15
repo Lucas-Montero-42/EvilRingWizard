@@ -132,8 +132,8 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         AssignSpecialRooms();
+        
 
-        //Debug.Log(currentnumberOfRooms);
         for (int x = 0; x < 20; x++)
         {
             for (int y = 0; y < 20; y++)
@@ -141,11 +141,18 @@ public class DungeonGenerator : MonoBehaviour
                 if (floorPlan[x, y].ocupied)
                 {
                     AsignRoomPrefab(floorPlan[x, y]);
+                    AddDoors(floorPlan[x, y]);
                 }
             }
         }
+
+        
+
         return true;
     }
+
+
+
     public void CheckAllNeighbours(Room r)
     {
         bool addedNeighbour = false;
@@ -200,8 +207,6 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
     }
-
-
     public void AddNeighbour(Room r, Dir direction)
     {
         Room neighbour = GetNeighbour(r, direction);
@@ -321,7 +326,10 @@ public class DungeonGenerator : MonoBehaviour
             return false;
         }
         bossRoom.roomType = RoomTypes.BOSS;
-        Instantiate(ExitDoor, new Vector3(bossRoom.x * roomSize + adjustingToGidDistance, ExitDoor.transform.localScale.y - (roomSize / 2), bossRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+        Instantiate(ExitDoor, new Vector3(bossRoom.x * roomSize + adjustingToGidDistance,
+                                          (ExitDoor.transform.localScale.y/2),
+                                          bossRoom.y * roomSize + adjustingToGidDistance),
+                                          Quaternion.identity);
         return true;
     }
     public void AssignSpecialRooms()
@@ -342,7 +350,11 @@ public class DungeonGenerator : MonoBehaviour
         {
             treasureRoom = ocupiedRooms[UnityEngine.Random.Range(0, ocupiedRooms.Count)];
             treasureRoom.roomType = RoomTypes.TREASURE;
-            Instantiate(treasureChest, new Vector3(treasureRoom.x * roomSize + adjustingToGidDistance, -roomSize / 2 + treasureChest.transform.localScale.y, treasureRoom.y * roomSize + adjustingToGidDistance), Quaternion.identity);
+            Instantiate(treasureChest, new Vector3(treasureRoom.x * roomSize + adjustingToGidDistance,
+                                                   0.1f,
+                                                   treasureRoom.y * roomSize + adjustingToGidDistance), 
+                                                   Quaternion.identity
+                                                   );
         }
         
 
@@ -426,7 +438,7 @@ public class DungeonGenerator : MonoBehaviour
             }
             else if (disposition[0] == true && disposition[2] == true)
             {
-                Instantiate(twoDoorOpositeRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0)); // Cambiar rotación
+                Instantiate(twoDoorCloseRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.Euler(0, -90, 0)); // Cambiar rotación
                 // Direction is _|
             }
             else if (disposition[0] == true && disposition[3] == true) 
@@ -485,6 +497,10 @@ public class DungeonGenerator : MonoBehaviour
             Instantiate(fourDoorRooms[rand], new Vector3(r.x * roomSize + adjustingToGidDistance, 0, r.y * roomSize + adjustingToGidDistance), Quaternion.identity);
             // Direction is all
         }
+    }
+    private void AddDoors(Room room)
+    {
+        throw new NotImplementedException();
     }
     public int GetNumberOffNeighbours(Room r)
     {
