@@ -23,9 +23,13 @@ public class RingGhost : MonoBehaviour
 
     private void Awake()
     {
-        chests = inventoryParent.GetComponentsInChildren<InventoryGridSystem>(true);
+        //UpdateChests();
+    }
+    public void UpdateChests()
+    {
+        chests = inventoryParent.GetComponentsInChildren<InventoryGridSystem>(false); // Pilla todos los cofres que exiten ahora
 
-        foreach (InventoryGridSystem c in chests)
+        foreach (InventoryGridSystem c in chests) // Asigna las acciones de inventartio a las instancias de los cofres
         {
             c.pickUpItem += HandsItemPickup;
             c.dropItem += HandsItemDrop;
@@ -34,12 +38,12 @@ public class RingGhost : MonoBehaviour
     }
     void Start()
     {
-        //Crea el objeto para que siga al cursor
+        // Crea el objeto para que siga al cursor
         visual = Instantiate(defaultItem.itemVisual, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
         visual.SetParent(this.transform);
-        //Asigna al hijo que es el que tiene la información
+        // Asigna al hijo que es el que tiene la información
         visualChild = GetChild(visual);
-
+        // Añade las acciones de inventario a las manos
         hands.pickUpItem += ChestItemPickup;
         hands.dropItem += ChestItemDrop;
         hands.rotateItem += ChestRotateItem;

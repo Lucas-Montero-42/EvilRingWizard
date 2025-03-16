@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265463765582176496}
   - component: {fileID: 674008900403944719}
-  - component: {fileID: 2938530955273302877}
+  - component: {fileID: 1852800285342273322}
   m_Layer: 0
   m_Name: DungeonGenerator
   m_TagString: Untagged
@@ -47,12 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExitDoor: {fileID: 5192515956042703581, guid: 09a74459ff9d48b4da2a796c68cdc288,
     type: 3}
-  roomPrefabs:
-  - {fileID: 1853694130224325688, guid: b4bea744dd75a2944a4205eb9438713a, type: 3}
-  - {fileID: 1853694130224325688, guid: d958bf46643089d499cb575a575b0b4a, type: 3}
-  - {fileID: 1853694130224325688, guid: 7b13ed7a7a135fa419f757eb5a2baeb8, type: 3}
-  - {fileID: 1853694130224325688, guid: af64ac04644f2104f804e0635497b992, type: 3}
-  - {fileID: 1853694130224325688, guid: 63adc61ea7e09264bac927ba28061c17, type: 3}
+  DungeonParentObject: {fileID: 0}
   oneDoorRooms:
   - {fileID: 1853694130224325688, guid: b4bea744dd75a2944a4205eb9438713a, type: 3}
   - {fileID: 1853694130224325688, guid: ebc0b317fe840f24694265cd2e8b0474, type: 3}
@@ -76,7 +71,7 @@ MonoBehaviour:
   - {fileID: 9196998947781604501, guid: 4566d7a159804f5418c8f3b8c0bde970, type: 3}
   - {fileID: 5241675573543593498, guid: 81e4870abcb31f84fb911e00967806bb, type: 3}
   roomSize: 41
---- !u!114 &2938530955273302877
+--- !u!114 &1852800285342273322
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

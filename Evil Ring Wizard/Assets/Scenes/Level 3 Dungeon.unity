@@ -382,6 +382,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5192515956042703581, guid: 39960c4fa6524db469a7f593e1e723e1,
         type: 3}
+    - target: {fileID: 674008900403944719, guid: a1c8e8601c05b704ea01feea74dc02b0,
+        type: 3}
+      propertyPath: DungeonParentObject
+      value: 
+      objectReference: {fileID: 4259915819735709160, guid: efdda7a56ccc7f94faf7bfa58b3a224f,
+        type: 3}
     - target: {fileID: 1031423986360210233, guid: a1c8e8601c05b704ea01feea74dc02b0,
         type: 3}
       propertyPath: m_Name

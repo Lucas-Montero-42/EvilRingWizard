@@ -37,7 +37,6 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject DungeonParentObject;
     private GameObject DungeonParent;
     public Room[,] floorPlan = new Room[20, 20];
-    [SerializeField]private List<GameObject> roomPrefabs;
     [SerializeField]private List<GameObject> oneDoorRooms;
     [SerializeField]private List<GameObject> twoDoorOpositeRooms;
     [SerializeField]private List<GameObject> twoDoorCloseRooms;
@@ -59,12 +58,17 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Start()
     {
+        DungeonSetup();
+    }
+    private void DungeonSetup()
+    {
+        GameObject parent = Instantiate(DungeonParentObject, Vector3.zero, Quaternion.identity);
+        DungeonParent = parent;
         if (roomQueue == null) roomQueue = new Queue<Room>();
         if (deadEnds == null) deadEnds = new Queue<Room>();
         floorPlan = new Room[20, 20];
         //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
         int attemptCount = 0;
-        createDungeonParent();
         while (!GenerateDungeon() && attemptCount < 100)  // Máximo 1000 intentos
         {
             attemptCount++;
@@ -77,34 +81,11 @@ public class DungeonGenerator : MonoBehaviour
         }
         //Debug.Log(attemptCount);
         GetComponent<NavMeshSurface>().BuildNavMesh();
-    }
-    private void createDungeonParent()
-    {
-        GameObject parent = Instantiate(DungeonParentObject,Vector3.zero, Quaternion.identity);
-        DungeonParent = parent;
     }
     public void RESETDUNGEON()
     {
         Destroy(DungeonParent);
-        createDungeonParent();
-        if (roomQueue == null) roomQueue = new Queue<Room>();
-        if (deadEnds == null) deadEnds = new Queue<Room>();
-        floorPlan = new Room[20, 20];
-        //Instantiate(DebugCube, new Vector3(roomQueue.Peek().x * roomSize + adjustingToGidDistance, 0, roomQueue.Peek().y * roomSize + adjustingToGidDistance), Quaternion.identity);
-        int attemptCount = 0;
-        createDungeonParent();
-        while (!GenerateDungeon() && attemptCount < 100)  // Máximo 1000 intentos
-        {
-            attemptCount++;
-            Debug.Log("Número de intentos: " + attemptCount);
-            if (attemptCount >= 100)
-            {
-                Debug.LogError("Se alcanzó el máximo de intentos sin generar una mazmorras válida. Tienes muy mala suerte colega");
-                return;
-            }
-        }
-        //Debug.Log(attemptCount);
-        GetComponent<NavMeshSurface>().BuildNavMesh();
+        DungeonSetup();
     }
     private bool GenerateDungeon()
     {
@@ -163,7 +144,6 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         AssignSpecialRooms();
-        
 
         for (int x = 0; x < 20; x++)
         {

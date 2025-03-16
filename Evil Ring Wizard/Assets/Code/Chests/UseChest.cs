@@ -37,6 +37,7 @@ public class UseChest : MonoBehaviour
             GameManager.instance.HandsMenuScreen.SetActive(true);
             ChestInventory.SetActive(true);
             GameManager.instance.Pause();
+            GameManager.instance.HandsMenuScreen.GetComponentInChildren<RingGhost>().UpdateChests();
             interactText.GetComponent<TextMeshProUGUI>().text = "Press E to open";
             interactText.SetActive(false);
         }
