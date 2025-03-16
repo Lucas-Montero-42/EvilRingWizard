@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] enemyPrefabs;
     public GameObject[] spawnPositions;
     public GameObject effect;
-    public int enemyNumber;
     void Start()
     {
         
@@ -24,18 +23,19 @@ public class EnemySpawner : MonoBehaviour
     }
     private void SpawnEnemies()
     {
-        for (int i = 0; i < enemyNumber; i++)
+        for (int i = 0; i < spawnPositions.Length; i++)
         {
-            StartCoroutine(EnemyTimer(i)); // tiempo random entre 0 y 0.5f
+            float t = Random.Range(0, 1f);
+            StartCoroutine(EnemyTimer(t, spawnPositions[i].transform)); // tiempo random entre 0 y 0.5f
         }
     }
-    private IEnumerator EnemyTimer(float t)
+    private IEnumerator EnemyTimer(float t, Transform position)
     {
         yield return new WaitForSeconds(t);
-        Instantiate(effect);
-        yield return new WaitForSeconds(1.5f);
-        Instantiate(enemyPrefabs[0]);// Prefab random
-
+        Instantiate(effect, position.position, position.rotation);
+        yield return new WaitForSeconds(2f);
+        int e = Random.Range(0, enemyPrefabs.Length-1);
+        Instantiate(enemyPrefabs[e], position.position, position.rotation);// Prefab random
         yield return null;
         // SpawnEnemies
             // Effecto de partículas (igual un simbolo arcano en el suelo)
