@@ -4957,7 +4957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c0f2667a2becd4fa9995a61ab43769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleEffect: {fileID: 0}
+  particleEffect: {fileID: 4380241695900140267, guid: df8936528cc4c62418773e98cc047e6a,
+    type: 3}
   onFloor: 0
   damage: 0
 --- !u!54 &3819220030779922148

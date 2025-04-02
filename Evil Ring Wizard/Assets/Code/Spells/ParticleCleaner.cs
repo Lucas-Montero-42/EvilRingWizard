@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParticleCleaner : MonoBehaviour
 {
+    //public bool testing = false;
     public float DeathTime;
     void Start()
     {
@@ -13,6 +14,7 @@ public class ParticleCleaner : MonoBehaviour
     IEnumerator Clean()
     {
         yield return new WaitForSeconds(DeathTime);
+        //if(testing)Instantiate(gameObject, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

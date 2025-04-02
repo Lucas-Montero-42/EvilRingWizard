@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class DebugDunegeon : MonoBehaviour
 {
     // Start is called before the first frame update
+    public string scene;
     void Start()
     {
         
@@ -16,7 +17,7 @@ public class DebugDunegeon : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Dungeon");
+            SceneManager.LoadScene(scene);
         }
     }
 }
