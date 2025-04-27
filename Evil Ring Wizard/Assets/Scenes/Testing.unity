@@ -1285,6 +1285,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DungeonGenerator (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1031423986360210233, guid: a1c8e8601c05b704ea01feea74dc02b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4265463765582176496, guid: a1c8e8601c05b704ea01feea74dc02b0,
         type: 3}
       propertyPath: m_LocalPosition.x

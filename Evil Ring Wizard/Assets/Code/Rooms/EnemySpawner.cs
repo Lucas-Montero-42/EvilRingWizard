@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator EnemyTimer(float t, Transform position)
     {
         yield return new WaitForSeconds(t);
-        Instantiate(effect, position.position, position.rotation);
+        Instantiate(effect, new Vector3(position.position.x, position.position.y + 0.01f, position.position.z), position.rotation);
         yield return new WaitForSeconds(2f);
         int e = Random.Range(0, enemyPrefabs.Length-1);
         Instantiate(enemyPrefabs[e], position.position, position.rotation);// Prefab random
